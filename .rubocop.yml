@@ -1,0 +1,14 @@
+AllCops:
+  TargetRubyVersion: 2.3
+
+Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+#ignore double quote error
+Style/StringLiterals:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
