@@ -11,7 +11,7 @@ export default class CharacterList extends Component {
         this.setState({
           characterList: res.characters,
           characterListLoaded: true
-         });
+        });
       })
       .catch(err => console.log(err));
   }

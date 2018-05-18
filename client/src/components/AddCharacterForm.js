@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
+import Dropzone from 'react-dropzone';
 // import Auth from '../modules/Auth';
 
 export default class AddCharacterForm extends Component {
-  state = { name: '', description: '' }
+  constructor() {
+    super();
+    this.state = { name: '', description: '' }
 
-  handleChange = (event) => {
+    this.handleChange = this.handleChange.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+  }
+
+  handleChange(event) {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     })
   }
 
-  resetForm = () => {
+  resetForm() {
     this.setState({name: '', description: ''})
   }
 
