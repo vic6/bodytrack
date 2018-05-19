@@ -11,6 +11,19 @@ export default class AddPictureForm extends Component {
     this.sendImageToController = this.sendImageToController.bind(this);
   }
 
+  componentDidMount() {
+    fetch('/snapshots', {
+      method: 'GET',
+      headers: {
+        token: Auth.getToken(),
+        Authorization: `Token ${Auth.getToken()}`
+      }
+    })
+    .then(res => res.json())
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+  }
+
   sendImageToController(formPayLoad){
 
   fetch("/snapshots", {

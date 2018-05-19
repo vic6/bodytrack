@@ -9,11 +9,16 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
 class App extends Component {
-  state = {
-    auth: Auth.isUserAuthenticated()
-  };
+  constructor() {
+    super();
+    this.state = { auth: Auth.isUserAuthenticated() };
 
-  handleRegisterSubmit = (event, data) => {
+    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleRegisterSubmit(event, data) {
     event.preventDefault();
     fetch('/users', {
       method: 'POST',
@@ -30,9 +35,9 @@ class App extends Component {
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
       .catch(err => console.log(err));
-  };
+  }
 
-  handleLogin = (event, data) => {
+  handleLogin(event, data) {
     event.preventDefault();
     fetch('/login', {
       method: 'POST',
@@ -47,9 +52,9 @@ class App extends Component {
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
       .catch(err => console.log(err));
-  };
+  }
 
-  handleLogout = () => {
+  handleLogout() {
     fetch('/logout', {
       method: 'DELETE',
       headers: {
@@ -62,7 +67,7 @@ class App extends Component {
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
       .catch(err => console.log(err));
-  };
+  }
 
   render() {
     return (
