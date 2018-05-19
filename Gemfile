@@ -40,4 +40,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'carrierwave'
+gem 'json'
 gem 'mini_magick'
+gem 'pry'

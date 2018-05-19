@@ -7,12 +7,16 @@ class CharactersController < ApiController
   end
 
   def show
-    character = Character.find(params[:id])
+    character = Character.find(params[:id]) 
     render json: { character: character }
   end
 
   def create
-    character = Character.new(character_params)
+    # character = Character.new(character_params)
+    character = Character.new
+    character.name = params['character']['name']
+    character.description = params['character']['description']
+    # binding.pry
     character.user = current_user
 
     if character.save
