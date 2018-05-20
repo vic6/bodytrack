@@ -5,6 +5,7 @@ import AddPictureForm from './components/AddPictureForm';
 import Auth from './modules/Auth';
 import CharacterList from './components/CharacterList';
 import Dashboard from './components/Dashboard';
+import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
@@ -121,6 +122,7 @@ class App extends Component {
             path="/snapshots"
             render={() => (this.state.auth ? <AddPictureForm /> : <Redirect to="/login" />)}
           />
+          <Route path='/home' render={() => (this.state.auth ? <Home /> : <Redirect to="/login" />)} />
         </div>
       </Router>
     );
