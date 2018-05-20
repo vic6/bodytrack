@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AddPictureForm from './AddPictureForm';
 import Auth from '../modules/Auth';
 
 export default class Home extends Component {
@@ -34,8 +35,12 @@ export default class Home extends Component {
 
   render() {
     const { loaded } = this.state;
-    console.log(this.state.snapshots)
-    debugger;
-    return <div>{loaded ? this.renderImages() : <p>...Loading</p>}</div>;
+    console.log(this.state.snapshots);
+    return (
+      <div>
+        <AddPictureForm />
+        {loaded ? this.renderImages() : <p>...Loading</p>}
+      </div>
+    );
   }
 }
