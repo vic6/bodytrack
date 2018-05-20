@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token :auth_token
   has_many :characters
-  # has_many :snapshots
+  has_many :snapshots
 
   def invalidate_token
     update_columns(auth_token: nil)

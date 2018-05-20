@@ -3,10 +3,8 @@ class SnapshotsController < ApiController
   before_action :require_login
 
   def index
-    p current_user
-    thing = p 'HI' * 50
-    p thing
-    render json: { hi: thing }
+    snapshots = Snapshot.all
+    render json: { snapshots: snapshots }
   end
 
   def create
@@ -16,9 +14,9 @@ class SnapshotsController < ApiController
     p new_image
     p params['upladed_image']
     new_image.picture = params['uploaded_image']
-    # new_image.user = current_user
+    new_image.user = current_user
     # p current_user
-    binding.pry
+    #binding.pry
     if new_image.save
       render json: Snapshot.last
     end
