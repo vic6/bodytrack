@@ -1,60 +1,18 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import Auth from '../modules/Auth';
+// import Auth from '../modules/Auth';
 
 export default class AddPictureForm extends Component {
   constructor() {
     super();
     this.state = { uploads: [] };
-
-    this.readFile = this.readFile.bind(this);
-    this.sendImageToController = this.sendImageToController.bind(this);
-  }
-
-  componentDidMount() {
-    fetch('/snapshots', {
-      method: 'GET',
-      headers: {
-        token: Auth.getToken(),
-        Authorization: `Token ${Auth.getToken()}`
-      }
-    })
-      .then(res => res.json())
-      .catch(err => console.log(err));
-  }
-
-  sendImageToController(formPayLoad) {
-    fetch('/snapshots', {
-      method: 'POST',
-      body: formPayLoad,
-      headers: {
-        token: Auth.getToken(),
-        Authorization: `Token ${Auth.getToken()}`
-      }
-    })
-      // might be a good idea to put error handling here
-      .then(response => response.json())
-      .then(imageFromController => {
-        console.log(imageFromController);
-
-        this.setState({ uploads: this.state.uploads.concat(imageFromController) });
-      })
-      .catch(err => console.log(err));
-  }
-
-  readFile(files) {
-    if (files && files[0]) {
-      const formPayLoad = new FormData();
-      formPayLoad.append('uploaded_image', files[0]);
-      this.sendImageToController(formPayLoad);
-    }
   }
 
   render() {
     console.log(this.state);
     return (
       <div>
-        <Dropzone onDrop={this.readFile}>
+        <Dropzone onDrop={this.props.readFile}>
           {this.state.uploads[0] ? (
             <div>
               <img alt="preview" src={this.state.uploads[0].picture.url} />
