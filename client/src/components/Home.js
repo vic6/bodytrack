@@ -66,6 +66,7 @@ export default class Home extends Component {
     return this.state.snapshots.map(snap => (
       <div key={snap.id}>
         <img alt="snapshot" src={snap.picture.url} max-width='100%' />
+        <p className='legend'>{snap.created_at.match('[^T]*')}</p>
       </div>
     ));
   }
