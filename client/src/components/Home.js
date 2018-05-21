@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
+// import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import AddPictureForm from './AddPictureForm';
 import Auth from '../modules/Auth';
 
@@ -40,12 +43,13 @@ export default class Home extends Component {
         token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       }
-    }).then(() => this.getUserSnapshots())
+    })
+      .then(() => this.getUserSnapshots())
       // might be a good idea to put error handling here
       // .then(response => response.json())
       // .then(imageFromController => {
-        // console.log(imageFromController);
-        // this.setState({ uploads: this.state.uploads.concat(imageFromController) });
+      // console.log(imageFromController);
+      // this.setState({ uploads: this.state.uploads.concat(imageFromController) });
       // })
       .catch(err => console.log(err));
   }
@@ -61,7 +65,7 @@ export default class Home extends Component {
   renderImages() {
     return this.state.snapshots.map(snap => (
       <div key={snap.id}>
-        <img alt="snapshot" src={snap.picture.url} />
+        <img alt="snapshot" src={snap.picture.url} max-width='100%' />
       </div>
     ));
   }
@@ -72,8 +76,29 @@ export default class Home extends Component {
     return (
       <div>
         <AddPictureForm readFile={this.readFile} />
-        {loaded ? this.renderImages() : <p>...Loading</p>}
+      <div style={{display: 'flex'}}>
+        <Carousel dynamicHeight>
+          {loaded ? (
+            this.renderImages()
+          ) : (
+            <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-480-1.jpg" />
+          )}
+        </Carousel>
+        <Carousel dynamicHeight>
+          {loaded ? (
+            this.renderImages()
+          ) : (
+            <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-480-1.jpg" />
+          )}
+        </Carousel>
       </div>
+    </div>
+
     );
   }
 }
+
+/* <div>
+  <AddPictureForm readFile={this.readFile} />
+  {loaded ? this.renderImages() : <p>...Loading</p>}
+</div> */
