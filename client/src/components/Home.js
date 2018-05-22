@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-// import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Grid from '@material-ui/core/Grid';
+// import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+
 import AddPictureForm from './AddPictureForm';
 import Auth from '../modules/Auth';
 
@@ -59,7 +62,7 @@ export default class Home extends Component {
   renderImages() {
     return this.state.snapshots.map(snap => (
       <div key={snap.id}>
-        <img alt="snapshot" src={snap.picture.url} max-width='90%' height="500px" />
+        <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
         <p className="legend">{snap.created_at.match('[^T]*')}</p>
       </div>
     ));
@@ -68,24 +71,26 @@ export default class Home extends Component {
   render() {
     const { loaded } = this.state;
     return (
-      <div>
-        <AddPictureForm readFile={this.readFile} />
-        <div style={{ display: 'flex' }}>
-          <Carousel dynamicHeight>
-            {loaded ? (
-              this.renderImages()
-            ) : (
-              <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-400-1.jpg" />
-            )}
-          </Carousel>
-          <Carousel dynamicHeight showThumbs={false}>
-            {loaded ? (
-              this.renderImages()
-            ) : (
-              <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-400-1.jpg" />
-            )}
-          </Carousel>
-        </div>
+      <div style={{ padding: '50px' }}>
+        {loaded ? (
+          // <AddPictureForm readFile={this.readFile} />
+          <Grid container spacing={8}>
+            <Grid item sm={6} xs={12}>
+              <Paper sm={6} xs={12}>
+                <Carousel dynamicHeight showThumbs={false}>
+                  {this.renderImages()}
+                </Carousel>
+              </Paper>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Carousel dynamicHeight showThumbs={false} selectedItem={1}>
+                {this.renderImages()}
+              </Carousel>
+            </Grid>
+          </Grid>
+        ) : (
+          <p>bye</p>
+        )}
       </div>
     );
   }
@@ -95,3 +100,21 @@ export default class Home extends Component {
   <AddPictureForm readFile={this.readFile} />
   {loaded ? this.renderImages() : <p>...Loading</p>}
 </div> */
+
+// <div style={{padding: '50px'}}>
+//   <AddPictureForm readFile={this.readFile} />
+//   <Grid container spacing={8}>
+//     <Grid item sm={6} xs={12}>
+//       <Paper sm={6} xs={12}>
+//       <Carousel dynamicHeight showThumbs={false}>
+//         {snapshots}
+//       </Carousel>
+//     </Paper>
+//     </Grid>
+//     <Grid item sm={6} xs={12}>
+//       <Carousel dynamicHeight showThumbs={false} selectedItem={1} >
+//         {snapshots}
+//       </Carousel>
+//     </Grid>
+//   </Grid>
+// </div>
