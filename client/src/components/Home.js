@@ -45,12 +45,6 @@ export default class Home extends Component {
       }
     })
       .then(() => this.getUserSnapshots())
-      // might be a good idea to put error handling here
-      // .then(response => response.json())
-      // .then(imageFromController => {
-      // console.log(imageFromController);
-      // this.setState({ uploads: this.state.uploads.concat(imageFromController) });
-      // })
       .catch(err => console.log(err));
   }
 
@@ -65,36 +59,34 @@ export default class Home extends Component {
   renderImages() {
     return this.state.snapshots.map(snap => (
       <div key={snap.id}>
-        <img alt="snapshot" src={snap.picture.url} max-width='100%' />
-        <p className='legend'>{snap.created_at.match('[^T]*')}</p>
+        <img alt="snapshot" src={snap.picture.url} max-width='90%' height="500px" />
+        <p className="legend">{snap.created_at.match('[^T]*')}</p>
       </div>
     ));
   }
 
   render() {
     const { loaded } = this.state;
-    console.log(this.state.snapshots);
     return (
       <div>
         <AddPictureForm readFile={this.readFile} />
-      <div style={{display: 'flex'}}>
-        <Carousel dynamicHeight>
-          {loaded ? (
-            this.renderImages()
-          ) : (
-            <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-480-1.jpg" />
-          )}
-        </Carousel>
-        <Carousel dynamicHeight>
-          {loaded ? (
-            this.renderImages()
-          ) : (
-            <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-480-1.jpg" />
-          )}
-        </Carousel>
+        <div style={{ display: 'flex' }}>
+          <Carousel dynamicHeight>
+            {loaded ? (
+              this.renderImages()
+            ) : (
+              <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-400-1.jpg" />
+            )}
+          </Carousel>
+          <Carousel dynamicHeight showThumbs={false}>
+            {loaded ? (
+              this.renderImages()
+            ) : (
+              <img alt="cat" src="http://lorempixel.com/output/cats-q-c-640-400-1.jpg" />
+            )}
+          </Carousel>
+        </div>
       </div>
-    </div>
-
     );
   }
 }

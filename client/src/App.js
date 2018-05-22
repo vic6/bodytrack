@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom
 import './App.css';
 import AddPictureForm from './components/AddPictureForm';
 import Auth from './modules/Auth';
-import CharacterList from './components/CharacterList';
+// import CharacterList from './components/CharacterList';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
@@ -78,12 +78,12 @@ class App extends Component {
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
             <Link to="/dash">Dashboard</Link>
-            <Link to="/characters">All charaters</Link>
+            <Link to="/home">Home</Link>
             <Link to="#" onClick={this.handleLogout}>
               Logout
             </Link>
           </div>
-          <Route exact path="/characters" render={() => <CharacterList />} />
+          <Route exact path="/characters" render={() => <Home />} />
           <Route
             exact
             path="/register"
