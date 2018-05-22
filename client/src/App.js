@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import Navbar from './components/Navbar';
 
 class App extends Component {
   constructor() {
