@@ -10,6 +10,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import Navbar from './components/Navbar';
 
+
 class App extends Component {
   constructor() {
     super();
@@ -73,59 +74,62 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <div className="nav">
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/dash">Dashboard</Link>
-            <Link to="/home">Home</Link>
-            <Link to="#" onClick={this.handleLogout}>
-              Logout
-            </Link>
+      <div>
+        <Navbar handleLogout={this.handleLogout}/>
+        <Router>
+          <div className="App">
+            <div className="nav">
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+              <Link to="/dash">Dashboard</Link>
+              <Link to="/home">Home</Link>
+              <Link to="#" onClick={this.handleLogout}>
+                Logout
+              </Link>
+            </div>
+            <Route exact path="/characters" render={() => <Home />} />
+            <Route
+              exact
+              path="/register"
+              render={() =>
+                this.state.auth ? (
+                  <Redirect to="/dash" />
+                ) : (
+                  <RegisterForm handleRegisterSubmit={this.handleRegisterSubmit} />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/login"
+              render={() =>
+                this.state.auth ? (
+                  <Redirect to="/dash" />
+                ) : (
+                  <LoginForm handleLogin={this.handleLogin} />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/dash"
+              render={() =>
+                this.state.auth ? (
+                  <Dashboard handleNewCharacterSubmit={this.handleNewCharacterSubmit} />
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/snapshots"
+              render={() => (this.state.auth ? <AddPictureForm /> : <Redirect to="/login" />)}
+            />
+            <Route path='/home' render={() => (this.state.auth ? <Home /> : <Redirect to="/login" />)} />
           </div>
-          <Route exact path="/characters" render={() => <Home />} />
-          <Route
-            exact
-            path="/register"
-            render={() =>
-              this.state.auth ? (
-                <Redirect to="/dash" />
-              ) : (
-                <RegisterForm handleRegisterSubmit={this.handleRegisterSubmit} />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/login"
-            render={() =>
-              this.state.auth ? (
-                <Redirect to="/dash" />
-              ) : (
-                <LoginForm handleLogin={this.handleLogin} />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/dash"
-            render={() =>
-              this.state.auth ? (
-                <Dashboard handleNewCharacterSubmit={this.handleNewCharacterSubmit} />
-              ) : (
-                <Redirect to="/login" />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/snapshots"
-            render={() => (this.state.auth ? <AddPictureForm /> : <Redirect to="/login" />)}
-          />
-          <Route path='/home' render={() => (this.state.auth ? <Home /> : <Redirect to="/login" />)} />
-        </div>
-      </Router>
+        </Router>
+      </div>
     );
   }
 }

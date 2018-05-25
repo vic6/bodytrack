@@ -11,31 +11,32 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Auth from '../modules/Auth';
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   flex: {
-    flex: 1
+    flex: 1,
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 };
 
 class MenuAppBar extends React.Component {
   state = {
     auth: true,
-    anchorEl: null
+    anchorEl: null,
   };
 
   handleChange = (event, checked) => {
     this.setState({ auth: checked });
   };
 
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -72,7 +73,8 @@ class MenuAppBar extends React.Component {
                   aria-owns={open ? 'menu-appbar' : null}
                   aria-haspopup="true"
                   onClick={this.handleMenu}
-                  color="inherit">
+                  color="inherit"
+                >
                   <AccountCircle />
                 </IconButton>
                 <Menu
@@ -80,16 +82,18 @@ class MenuAppBar extends React.Component {
                   anchorEl={anchorEl}
                   anchorOrigin={{
                     vertical: 'top',
-                    horizontal: 'right'
+                    horizontal: 'right',
                   }}
                   transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'right'
+                    horizontal: 'right',
                   }}
                   open={open}
-                  onClose={this.handleClose}>
+                  onClose={this.handleClose}
+                >
                   <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.props.handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             )}
