@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import './App.css';
 import AddPictureForm from './components/AddPictureForm';
 import Auth from './modules/Auth';
@@ -8,20 +8,12 @@ import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
-import Navbar from './components/Navbar';
-
+import NavBar from './components/NavBar';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { auth: Auth.isUserAuthenticated() };
+  state = { auth: Auth.isUserAuthenticated() };
 
-    this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  handleRegisterSubmit(event, data) {
+  handleRegisterSubmit = (event, data) => {
     event.preventDefault();
     fetch('/users', {
       method: 'POST',
@@ -38,9 +30,9 @@ class App extends Component {
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  handleLogin(event, data) {
+  handleLogin = (event, data) => {
     event.preventDefault();
     fetch('/login', {
       method: 'POST',
@@ -55,9 +47,9 @@ class App extends Component {
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  handleLogout() {
+  handleLogout = () => {
     fetch('/logout', {
       method: 'DELETE',
       headers: {
@@ -70,23 +62,14 @@ class App extends Component {
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
       .catch(err => console.log(err));
-  }
+  };
 
   render() {
     return (
       <div>
-        <Navbar handleLogout={this.handleLogout}/>
         <Router>
           <div className="App">
-            <div className="nav">
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-              <Link to="/dash">Dashboard</Link>
-              <Link to="/home">Home</Link>
-              <Link to="#" onClick={this.handleLogout}>
-                Logout
-              </Link>
-            </div>
+            <NavBar handleLogout={this.handleLogout} isLoggedIn={this.state.auth} />
             <Route exact path="/characters" render={() => <Home />} />
             <Route
               exact
@@ -126,7 +109,10 @@ class App extends Component {
               path="/snapshots"
               render={() => (this.state.auth ? <AddPictureForm /> : <Redirect to="/login" />)}
             />
-            <Route path='/home' render={() => (this.state.auth ? <Home /> : <Redirect to="/login" />)} />
+            <Route
+              path="/home"
+              render={() => (this.state.auth ? <Home /> : <Redirect to="/login" />)}
+            />
           </div>
         </Router>
       </div>
