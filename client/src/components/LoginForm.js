@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, FormGroup, FormControl, Col, ControlLabel, Button } from 'react-bootstrap';
 
 export default class LoginForm extends Component {
   state = { username: '', password: '' };
@@ -13,15 +14,34 @@ export default class LoginForm extends Component {
   render() {
     const { username, password } = this.state;
     return (
-      <div className="login-form">
-        <form
-          onSubmit={event => this.props.handleLogin(event, this.state)}
-          onChange={this.handleChange}>
-          <input type="text" name="username" value={username} placeholder="Username" />
-          <input type="password" name="password" value={password} placeholder="Password" />
-          <input type="submit" value="Log In" />
-        </form>
-      </div>
+      <Form
+        horizontal
+        onChange={this.handleChange}
+        onSubmit={event => this.props.handleLogin(event, this.state)}>
+        <FormGroup controlId="formHorizontalEmail">
+          <Col componentClass={ControlLabel} sm={2}>
+            Username
+          </Col>
+          <Col sm={8}>
+            <FormControl type="text" placeholder="Username" value={username} name="username" />
+          </Col>
+        </FormGroup>
+
+        <FormGroup controlId="formHorizontalPassword">
+          <Col componentClass={ControlLabel} sm={2}>
+            Password
+          </Col>
+          <Col sm={8}>
+            <FormControl type="password" placeholder="Password" value={password} name="password" />
+          </Col>
+        </FormGroup>
+
+        <FormGroup>
+          <Col smOffset={2} sm={8}>
+            <Button type="submit">Log in</Button>
+          </Col>
+        </FormGroup>
+      </Form>
     );
   }
 }
