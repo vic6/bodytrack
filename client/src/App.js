@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import './App.css';
 import AddPictureForm from './components/AddPictureForm';
 import Auth from './modules/Auth';
-// import CharacterList from './components/CharacterList';
 import Dashboard from './components/Dashboard';
 import HomeContainer from './components/HomeContainer';
 import LoginForm from './components/LoginForm';
@@ -29,7 +28,6 @@ class App extends Component {
         Auth.authenticateToken(res.token);
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
-      .catch(err => console.log(err));
   };
 
   handleLogin = (event, data) => {
@@ -46,7 +44,6 @@ class App extends Component {
         Auth.authenticateToken(res.token);
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
-      .catch(err => console.log(err));
   };
 
   handleLogout = () => {
@@ -61,7 +58,6 @@ class App extends Component {
         Auth.deauthenticateToken();
         this.setState({ auth: Auth.isUserAuthenticated() });
       })
-      .catch(err => console.log(err));
   };
 
   render() {

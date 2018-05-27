@@ -41,8 +41,9 @@ export default class HomeContainer extends Component {
     this.setState(prevState => ({ active: !prevState.active }));
   };
 
-  readFile = files => {
-    console.log(files);
+  readFile = (event, files) => {
+    event.preventDefault();
+    console.log('Files:', files);
     if (files && files[0]) {
       const formPayLoad = new FormData();
       formPayLoad.append('uploaded_image', files[0]);
