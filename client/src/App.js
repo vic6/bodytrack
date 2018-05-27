@@ -5,7 +5,7 @@ import AddPictureForm from './components/AddPictureForm';
 import Auth from './modules/Auth';
 // import CharacterList from './components/CharacterList';
 import Dashboard from './components/Dashboard';
-import Home from './components/Home';
+import HomeContainer from './components/HomeContainer';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import NavBar from './components/NavBar';
@@ -70,7 +70,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <NavBar handleLogout={this.handleLogout} isLoggedIn={this.state.auth} />
-            <Route exact path="/characters" render={() => <Home />} />
+            <Route exact path="/characters" render={() => <HomeContainer />} />
             <Route
               exact
               path="/register"
@@ -111,7 +111,7 @@ class App extends Component {
             />
             <Route
               path="/home"
-              render={() => (this.state.auth ? <Home /> : <Redirect to="/login" />)}
+              render={() => (this.state.auth ? <HomeContainer /> : <Redirect to="/login" />)}
             />
           </div>
         </Router>
