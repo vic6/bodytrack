@@ -41,12 +41,11 @@ export default class HomeContainer extends Component {
     this.setState(prevState => ({ active: !prevState.active }));
   };
 
-  readFile = (event, files) => {
+  readFile = (event, file) => {
     event.preventDefault();
-    console.log('Files:', files);
-    if (files && files[0]) {
+    if (file) {
       const formPayLoad = new FormData();
-      formPayLoad.append('uploaded_image', files[0]);
+      formPayLoad.append('uploaded_image', file);
       this.sendImageToController(formPayLoad);
     }
   };

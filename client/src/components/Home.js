@@ -9,12 +9,9 @@ import AddPictureForm from './AddPictureForm';
 export default class Home extends Component {
   render() {
     const { loaded } = this.props;
-    console.log(loaded);
-    console.log(this.props.renderImages);
-    // console.log(this.props.renderImageData());
 
     return (
-      <div className="container" style={{ padding: '20px' }}>
+      <div className="container">
         <PageHeader>Snapshots</PageHeader>
         {loaded ? (
           <Grid container spacing={8}>
