@@ -19,7 +19,8 @@ const NavBar = props => {
         <NavItem componentClass={Link} href="/home" to="/home">
           Home
         </NavItem>
-
+      </Nav>
+      <Nav pullRight>
         {!props.isLoggedIn && (
           <NavItem componentClass={Link} href="/register" to="/register">
             Register

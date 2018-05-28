@@ -33,7 +33,8 @@ export default class AddPictureForm extends Component {
             type="file"
             accept="image/*"
           />
-          <Button>Upload</Button>
+          <input type='submit' name='Submit' />
+          {/* <Button>Upload</Button> */}
         </form>
 
         {/* <Dropzone onDrop={this.props.readFile}>
