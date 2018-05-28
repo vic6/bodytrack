@@ -4,7 +4,11 @@ class Auth {
   }
 
   static isUserAuthenticated() {
-    return sessionStorage.getItem('token') !== null;
+    const isAuth = sessionStorage.getItem('token');
+    if(isAuth === null || isAuth === 'undefined') {
+      return false
+    }
+    return true
   }
 
   static deauthenticateToken() {

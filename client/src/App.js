@@ -10,7 +10,7 @@ import RegisterForm from './components/RegisterForm';
 import NavBar from './components/NavBar';
 
 class App extends Component {
-  state = { auth: Auth.isUserAuthenticated() };
+  state = { auth: Auth.isUserAuthenticated(), errors: null };
 
   handleRegisterSubmit = (event, data) => {
     event.preventDefault();
@@ -41,8 +41,13 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(res => {
+        // if (res.errors) {
+        //   this.setState({errors: res.errors})
+        // }
         Auth.authenticateToken(res.token);
-        this.setState({ auth: Auth.isUserAuthenticated() });
+        console.log('RES err', res.errors)
+        this.setState({ auth: Auth.isUserAuthenticated(), errors: res.errors });
+        console.log(this.state);
       })
   };
 
@@ -85,7 +90,7 @@ class App extends Component {
                 this.state.auth ? (
                   <Redirect to="/dash" />
                 ) : (
-                  <LoginForm handleLogin={this.handleLogin} />
+                  <LoginForm handleLogin={this.handleLogin} errors={this.state.errors} />
                 )
               }
             />
