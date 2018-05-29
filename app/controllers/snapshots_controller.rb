@@ -8,23 +8,17 @@ class SnapshotsController < ApiController
   end
 
   def create
-    p '$' * 50
     new_image = Snapshot.new
-    p '*' * 50
-    p new_image
-    p params['upladed_image']
     new_image.picture = params['uploaded_image']
     new_image.user = current_user
-    # p current_user
-    #binding.pry
-    if new_image.save
-      render json: Snapshot.last
-    end
+    # binding.pry
+    render json: Snapshot.last if new_image.save
   end
 
   private
 
   def snapshot_params
-    params.require(:snapshot).permit(:content, :picture)
+    params.require(:snapshot).permit(:picture, :neck_size, :hip_size,
+                                     :waist_size, :chest_size, :note)
   end
 end

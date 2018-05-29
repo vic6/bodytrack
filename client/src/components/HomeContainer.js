@@ -25,6 +25,8 @@ export default class HomeContainer extends Component {
   };
 
   sendImageToController = formPayLoad => {
+    console.log('Payload', formPayLoad);
+    debugger;
     fetch('/snapshots', {
       method: 'POST',
       body: formPayLoad,
@@ -41,18 +43,27 @@ export default class HomeContainer extends Component {
     this.setState(prevState => ({ active: !prevState.active }));
   };
 
-  readFile = (event, file) => {
+  readFile = (event, file, stats) => {
+    console.log('STATS', stats)
     event.preventDefault();
     if (file) {
       const formPayLoad = new FormData();
       formPayLoad.append('uploaded_image', file);
+      formPayLoad.append('stats', JSON.stringify(stats))
       this.sendImageToController(formPayLoad);
     }
   };
 
+  logPicture = (event) => {
+    console.log(event.target.dataset.date)
+    // console.log(event.target.data('key').key);
+    console.log()
+    // console.log(event.target.firstChild)
+  }
+
   renderImages = () =>
     this.state.snapshots.map(snap => (
-      <div key={snap.id}>
+      <div data-date={snap.created_at} role='presentation' onClick={(event)=> this.logPicture(event)} key={snap.id}>
         <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
         <p className={this.state.active ? null : 'legend'}>{snap.created_at.match('[^T]*')}</p>
       </div>

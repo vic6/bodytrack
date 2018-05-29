@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
 export default class AddPictureForm extends Component {
-  state = { selectedFile: null };
+  state = { selectedFile: null, stats: { chest_size: '' } };
 
-  setInputFormRef = (element) => {
-    this.inputForm = element
-  }
+  setInputFormRef = element => {
+    this.inputForm = element;
+  };
 
   inputForm = null;
 
@@ -15,43 +15,30 @@ export default class AddPictureForm extends Component {
     this.setState({ selectedFile: event.target.files[0] });
   };
 
-  // resetInput = (input) => {
-  // }
-
-  handleUpload = () => {
-    console.log(this.state.selectedFile);
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      stats: {[name]: value}
+    });
   };
 
   render() {
-    console.log(this.state.selectedFile);
     return (
       <div>
-        <form onSubmit={event => this.props.readFile(event, this.state.selectedFile)}>
+        <form
+          onChange={this.handleChange}
+          onSubmit={event => this.props.readFile(event, this.state.selectedFile, this.state.stats)}>
+          <input placeholder='Chest size' type="number" name="chest_size" value={this.state.stats.chest_size} />
           <input
             ref={this.setInputFormRef}
             onChange={this.handleFileChange}
             type="file"
             accept="image/*"
           />
-          <input type='submit' name='Submit' />
+          <input type="submit" name="Submit" />
           {/* <Button>Upload</Button> */}
         </form>
-
-        {/* <Dropzone onDrop={this.props.readFile}>
-        {this.state.selectedFile ? (
-          <div>
-            <img alt="preview" src={this.state.selectedFile.picture.url} />
-            <p>Drag or click again to change image</p>
-          </div>
-        ) : (
-          <p>Drag in a file or click to upload a logo (jpeg/png only)</p>
-        )}
-      </Dropzone> */}
-
       </div>
-
-      // <div>
-      // </div>
     );
   }
 }

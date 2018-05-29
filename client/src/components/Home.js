@@ -7,8 +7,18 @@ import Paper from '@material-ui/core/Paper';
 import AddPictureForm from './AddPictureForm';
 
 export default class Home extends Component {
+  state ={ secondSnapStats: null }
+
+  getImage = (event) => {
+    console.log(event.target)
+    console.log('DATA',event.target.dataset)
+    // const el = document.getElementById('icecream')
+    // console.log(el.dataset.name);
+  }
+
   render() {
     const { loaded } = this.props;
+
 
     return (
       <div className="container">
@@ -18,7 +28,14 @@ export default class Home extends Component {
             <Grid item sm={6} xs={12}>
               <Paper sm={6} xs={12}>
                 <Carousel dynamicHeight showThumbs={false} infiniteLoop>
-                  {this.props.renderImages()}
+                  <div onClick={(event)=>this.getImage(event)}>
+                    <img id='icecream'
+                      alt="snapshot"
+                      src="/uploads/snapshot/picture/1/nature.jpeg"
+                      max-width="20%"
+                      height="500px"
+                    />
+                  </div>
                 </Carousel>
                 {/* <div>{this.renderImageData()}</div> */}
               </Paper>
