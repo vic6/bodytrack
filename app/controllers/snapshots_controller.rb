@@ -9,9 +9,14 @@ class SnapshotsController < ApiController
 
   def create
     new_image = Snapshot.new
+    stats = JSON.parse(params['stats'])
     new_image.picture = params['uploaded_image']
+    new_image.waist_size = stats["waist_size"].to_i
+    new_image.chest_size = stats["chest_size"].to_i
+    p '*' * 20
+    p params['stats']
+    p '*' * 20
     new_image.user = current_user
-    # binding.pry
     render json: Snapshot.last if new_image.save
   end
 

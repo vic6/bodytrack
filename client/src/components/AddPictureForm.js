@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
 export default class AddPictureForm extends Component {
-  state = { selectedFile: null, stats: { chest_size: '' } };
+  state = { selectedFile: null, stats: { chest_size: '', waist_size: '' } };
 
   setInputFormRef = element => {
     this.inputForm = element;
@@ -18,17 +18,24 @@ export default class AddPictureForm extends Component {
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
-      stats: {[name]: value}
+      stats: { [name]: value, waist_size: value }
     });
+    console.log('Hi', this.state);
+    console.log(this.state.stats)
   };
 
   render() {
     return (
       <div>
         <form
-          onChange={this.handleChange}
           onSubmit={event => this.props.readFile(event, this.state.selectedFile, this.state.stats)}>
-          <input placeholder='Chest size' type="number" name="chest_size" value={this.state.stats.chest_size} />
+          <input
+            onChange={this.handleChange}
+            placeholder="Chest size"
+            type="number"
+            name="chest_size"
+            value={this.state.stats.chest_size}
+          />
           <input
             ref={this.setInputFormRef}
             onChange={this.handleFileChange}

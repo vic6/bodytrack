@@ -27,7 +27,7 @@ export default class Home extends Component {
           <Grid container spacing={8}>
             <Grid item sm={6} xs={12}>
               <Paper sm={6} xs={12}>
-                <Carousel dynamicHeight showThumbs={false} infiniteLoop>
+                {/* <Carousel onChange={this.props.logId} dynamicHeight showThumbs={false} infiniteLoop>
                   <div onClick={(event)=>this.getImage(event)}>
                     <img id='icecream'
                       alt="snapshot"
@@ -36,14 +36,25 @@ export default class Home extends Component {
                       height="500px"
                     />
                   </div>
-                </Carousel>
+                  <div onClick={(event)=>this.getImage(event)}>
+                    <img id='icecream'
+                      alt="snapshot"
+                      src="/uploads/snapshot/picture/1/nature.jpeg"
+                      max-width="20%"
+                      height="500px"
+                    />
+                  </div>
+                </Carousel> */}
+                {this.props.renderImages()}
+                {/* <p>{document.getElementById(1).getAttribute('key')}</p> */}
                 {/* <div>{this.renderImageData()}</div> */}
               </Paper>
             </Grid>
             <Grid item sm={6} xs={12}>
-              <Carousel dynamicHeight showThumbs={false} selectedItem={1} infiniteLoop>
+              {/* {this.props.renderImages()} */}
+              {/* <Carousel onChange={()=>{console.log('dude')}} dynamicHeight showThumbs={false} selectedItem={1} infiniteLoop>
                 {this.props.renderImages()}
-              </Carousel>
+              </Carousel> */}
             </Grid>
             <AddPictureForm readFile={this.props.readFile} />
           </Grid>
