@@ -96,14 +96,13 @@ export default class HomeContainer extends Component {
   //   ));
 
   renderImages = () => {
-    const waist_size = this.state.sn
-    const {snapshots, index1, index2} = this.state
+    const { snapshots, index1, index2 } = this.state;
     return (
       <Grid container spacing={8}>
         <Grid item sm={6} xs={12}>
           <Paper sm={6} xs={12}>
             <Carousel
-              id="carousel2"
+              id="carousel1"
               selectedItem={index1}
               showThumbs={false}
               onChange={this.myHandler1}
@@ -127,17 +126,9 @@ export default class HomeContainer extends Component {
               onChange={this.myHandler2}
               infiniteLoop>
               {this.state.snapshots.map(snap => (
-                <div
-                  data-date={snap.created_at}
-                  data-waist={snap.waist_size}
-                  role="presentation"
-                  onClick={event => this.logPicture(event)}
-                  key={snap.id}
-                  id={snap.id}>
+                <div key={snap.id}>
                   <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                  <p className={this.state.active ? null : 'legend'}>
-                    {snap.created_at.match('[^T]*')}
-                  </p>
+                  <p className={'legend'}>{snap.created_at.match('[^T]*')}</p>
                 </div>
               ))}
             </Carousel>
@@ -155,12 +146,22 @@ export default class HomeContainer extends Component {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell component="th" scope="row">Weight</TableCell>
+                  <TableCell component="th" scope="row">
+                    Date
+                  </TableCell>
+                  <TableCell>{snapshots[index1].created_at.match('[^T]*')}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Weight</TableCell>
                   <TableCell>150</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Neck</TableCell>
                   <TableCell>{snapshots[index1].neck_size || 0}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Chest</TableCell>
+                  <TableCell>{snapshots[index1].chest_size || 0}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Waist</TableCell>
@@ -170,12 +171,55 @@ export default class HomeContainer extends Component {
                   <TableCell>Hip</TableCell>
                   <TableCell>{snapshots[index1].hip_size || 0}</TableCell>
                 </TableRow>
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+
+        <Grid item sm={6} xs={12}>
+          <Paper sm={6} xs={12}>
+            <Table>
+              <TableHead>
                 <TableRow>
-                  <TableCell>URL</TableCell>
-                  <TableCell>{this.state.snapshots[this.state.index1].picture.url}</TableCell>
+                  <TableCell>Measurement</TableCell>
+                  <TableCell>Result(inches)</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    Date
+                  </TableCell>
+                  <TableCell>{snapshots[index2].created_at.match('[^T]*')}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Weight</TableCell>
+                  <TableCell>150</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Neck</TableCell>
+                  <TableCell>{snapshots[index2].neck_size || 0}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Chest</TableCell>
+                  <TableCell>{snapshots[index2].chest_size || 0}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Waist</TableCell>
+                  <TableCell>{snapshots[index2].waist_size || 0}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Hip</TableCell>
+                  <TableCell>{snapshots[index2].hip_size || 0}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
+          </Paper>
+        </Grid>
+
+        <Grid item sm={6} xs={12}>
+          <Paper sm={6} xs={12}>
+            {this.state.snapshots[this.state.index1].picture.url}
           </Paper>
         </Grid>
 
@@ -202,10 +246,6 @@ export default class HomeContainer extends Component {
           slide1={currentSlide1}
           slide2={currentSlide2}
         />
-        {/* <div>
-          <h3>{currentSlide1}</h3>
-          <h3>{currentSlide2}</h3>
-        </div> */}
       </div>
     );
   }
