@@ -15,15 +15,6 @@ ActiveRecord::Schema.define(version: 20180517184512) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "Characters", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_Characters_on_user_id"
-  end
-
   create_table "characters", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -35,14 +26,15 @@ ActiveRecord::Schema.define(version: 20180517184512) do
 
   create_table "snapshots", force: :cascade do |t|
     t.string "picture"
+    t.integer "weight"
     t.integer "neck_size"
     t.integer "chest_size"
     t.integer "waist_size"
     t.integer "hip_size"
     t.text "note"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.index ["user_id"], name: "index_snapshots_on_user_id"
   end
 

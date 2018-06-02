@@ -11,6 +11,7 @@ class SnapshotsController < ApiController
     new_image = Snapshot.new
     stats = JSON.parse(params['stats'])
     new_image.picture = params['uploaded_image']
+    new_image.weight = stats['weight']
     new_image.neck_size = stats["neck_size"].to_i
     new_image.chest_size = stats["chest_size"].to_i
     new_image.waist_size = stats["waist_size"].to_i

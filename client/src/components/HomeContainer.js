@@ -97,145 +97,148 @@ export default class HomeContainer extends Component {
 
   renderImages = () => {
     const { snapshots, index1, index2 } = this.state;
-    return (
-      <Grid container spacing={8}>
-        <Grid item sm={6} xs={12}>
-          <Paper sm={6} xs={12}>
-            <Carousel
-              id="carousel1"
-              selectedItem={index1}
-              showThumbs={false}
-              onChange={this.myHandler1}
-              infiniteLoop>
-              {this.state.snapshots.map(snap => (
-                <div key={snap.id} id={snap.id}>
-                  <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                  <p className="legend">{snap.created_at.match('[^T]*')}</p>
-                </div>
-              ))}
-            </Carousel>
-          </Paper>
-        </Grid>
+    if (snapshots.length) {
+      return (
+        <Grid container spacing={8}>
+          <Grid item sm={6} xs={12}>
+            <Paper sm={6} xs={12}>
+              <Carousel
+                id="carousel1"
+                selectedItem={index1}
+                showThumbs={false}
+                onChange={this.myHandler1}
+                infiniteLoop>
+                {this.state.snapshots.map(snap => (
+                  <div key={snap.id} id={snap.id}>
+                    <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
+                    <p className="legend">{snap.created_at.match('[^T]*')}</p>
+                  </div>
+                ))}
+              </Carousel>
+            </Paper>
+          </Grid>
 
-        <Grid item sm={6} xs={12}>
-          <Paper sm={6} xs={12}>
-            <Carousel
-              id="carousel2"
-              selectedItem={index2}
-              showThumbs={false}
-              onChange={this.myHandler2}
-              infiniteLoop>
-              {this.state.snapshots.map(snap => (
-                <div key={snap.id}>
-                  <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                  <p className={'legend'}>{snap.created_at.match('[^T]*')}</p>
-                </div>
-              ))}
-            </Carousel>
-          </Paper>
-        </Grid>
+          <Grid item sm={6} xs={12}>
+            <Paper sm={6} xs={12}>
+              <Carousel
+                id="carousel2"
+                selectedItem={index2}
+                showThumbs={false}
+                onChange={this.myHandler2}
+                infiniteLoop>
+                {this.state.snapshots.map(snap => (
+                  <div key={snap.id}>
+                    <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
+                    <p className={'legend'}>{snap.created_at.match('[^T]*')}</p>
+                  </div>
+                ))}
+              </Carousel>
+            </Paper>
+          </Grid>
 
-        <Grid item sm={6} xs={12}>
-          <Paper sm={6} xs={12}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Measurement</TableCell>
-                  <TableCell>Result(inches)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    Date
-                  </TableCell>
-                  <TableCell>{snapshots[index1].created_at.match('[^T]*')}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Weight</TableCell>
-                  <TableCell>150</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Neck</TableCell>
-                  <TableCell>{snapshots[index1].neck_size || 0}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Chest</TableCell>
-                  <TableCell>{snapshots[index1].chest_size || 0}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Waist</TableCell>
-                  <TableCell>{snapshots[index1].waist_size || 0}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Hip</TableCell>
-                  <TableCell>{snapshots[index1].hip_size || 0}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+          <Grid item sm={6} xs={12}>
+            <Paper sm={6} xs={12}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Measurement</TableCell>
+                    <TableCell>Result(inches)</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      Date
+                    </TableCell>
+                    <TableCell>{snapshots[index1].created_at.match('[^T]*')}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Weight</TableCell>
+                    <TableCell>{snapshots[index1].weight || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Neck</TableCell>
+                    <TableCell>{snapshots[index1].neck_size || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Chest</TableCell>
+                    <TableCell>{snapshots[index1].chest_size || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Waist</TableCell>
+                    <TableCell>{snapshots[index1].waist_size || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Hip</TableCell>
+                    <TableCell>{snapshots[index1].hip_size || 0}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Paper>
+          </Grid>
 
-        <Grid item sm={6} xs={12}>
-          <Paper sm={6} xs={12}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Measurement</TableCell>
-                  <TableCell>Result(inches)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    Date
-                  </TableCell>
-                  <TableCell>{snapshots[index2].created_at.match('[^T]*')}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Weight</TableCell>
-                  <TableCell>150</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Neck</TableCell>
-                  <TableCell>{snapshots[index2].neck_size || 0}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Chest</TableCell>
-                  <TableCell>{snapshots[index2].chest_size || 0}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Waist</TableCell>
-                  <TableCell>{snapshots[index2].waist_size || 0}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Hip</TableCell>
-                  <TableCell>{snapshots[index2].hip_size || 0}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-        </Grid>
+          <Grid item sm={6} xs={12}>
+            <Paper sm={6} xs={12}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Measurement</TableCell>
+                    <TableCell>Result(inches)</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell component="th" scope="row">
+                      Date
+                    </TableCell>
+                    <TableCell>{snapshots[index2].created_at.match('[^T]*')}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Weight</TableCell>
+                    <TableCell>{snapshots[index2].weight || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Neck</TableCell>
+                    <TableCell>{snapshots[index2].neck_size || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Chest</TableCell>
+                    <TableCell>{snapshots[index2].chest_size || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Waist</TableCell>
+                    <TableCell>{snapshots[index2].waist_size || 0}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Hip</TableCell>
+                    <TableCell>{snapshots[index2].hip_size || 0}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Paper>
+          </Grid>
 
-        <Grid item sm={6} xs={12}>
-          <Paper sm={6} xs={12}>
-            {this.state.snapshots[this.state.index1].picture.url}
-          </Paper>
-        </Grid>
+          <Grid item sm={6} xs={12}>
+            <Paper sm={6} xs={12}>
+              {this.state.snapshots[this.state.index1].picture.url}
+            </Paper>
+          </Grid>
 
-        <Grid item sm={6} xs={12}>
-          <Paper sm={6} xs={12}>
-            {this.state.snapshots[this.state.index2].picture.url}
-          </Paper>
+          <Grid item sm={6} xs={12}>
+            <Paper sm={6} xs={12}>
+              {this.state.snapshots[this.state.index2].picture.url}
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+    }
+    return <p>Add Images</p>;
   };
 
   render() {
     const { loaded, snapshots, index1, index2 } = this.state;
-    const currentSlide1 = loaded ? snapshots[index1].picture.url : '';
-    const currentSlide2 = loaded ? snapshots[index2].picture.url : '';
+    const currentSlide1 = loaded && snapshots.length ? snapshots[index1].picture.url : '';
+    const currentSlide2 = loaded && snapshots.length ? snapshots[index2].picture.url : '';
 
     return (
       <div>
