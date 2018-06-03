@@ -28,7 +28,8 @@ export default class HomeContainer extends Component {
       .then(res => res.json())
       .then(res => {
         console.log('RESPONSE', res);
-        this.setState({ snapshots: res.snapshots, loaded: true });
+        this.setState({ snapshots: res.snapshots, loaded: true})
+        this.setState({index2: this.state.snapshots.length - 1 || 0})
       })
       .catch(errors => console.log(errors));
   };
@@ -140,19 +141,19 @@ export default class HomeContainer extends Component {
                   </TableRow>
                   <TableRow>
                     <TableCell>Neck</TableCell>
-                    <TableCell>{snapshots[index1].neck_size || 0}</TableCell>
+                    <TableCell>{snapshots[index1].neckSize || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Chest</TableCell>
-                    <TableCell>{snapshots[index1].chest_size || 0}</TableCell>
+                    <TableCell>{snapshots[index1].chestSize || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Waist</TableCell>
-                    <TableCell>{snapshots[index1].waist_size || 0}</TableCell>
+                    <TableCell>{snapshots[index1].waistSize || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Hip</TableCell>
-                    <TableCell>{snapshots[index1].hip_size || 0}</TableCell>
+                    <TableCell>{snapshots[index1].hipSize || 0}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -181,34 +182,22 @@ export default class HomeContainer extends Component {
                   </TableRow>
                   <TableRow>
                     <TableCell>Neck</TableCell>
-                    <TableCell>{snapshots[index2].neck_size || 0}</TableCell>
+                    <TableCell>{snapshots[index2].neckSize || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Chest</TableCell>
-                    <TableCell>{snapshots[index2].chest_size || 0}</TableCell>
+                    <TableCell>{snapshots[index2].chestSize || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Waist</TableCell>
-                    <TableCell>{snapshots[index2].waist_size || 0}</TableCell>
+                    <TableCell>{snapshots[index2].waistSize || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Hip</TableCell>
-                    <TableCell>{snapshots[index2].hip_size || 0}</TableCell>
+                    <TableCell>{snapshots[index2].hipSize || 0}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
-            </Paper>
-          </Grid>
-
-          <Grid item sm={6} xs={12}>
-            <Paper sm={6} xs={12}>
-              {this.state.snapshots[this.state.index1].picture.url}
-            </Paper>
-          </Grid>
-
-          <Grid item sm={6} xs={12}>
-            <Paper sm={6} xs={12}>
-              {this.state.snapshots[this.state.index2].picture.url}
             </Paper>
           </Grid>
         </Grid>

@@ -12,10 +12,10 @@ class SnapshotsController < ApiController
     stats = JSON.parse(params['stats'])
     new_image.picture = params['uploaded_image']
     new_image.weight = stats['weight']
-    new_image.neck_size = stats["neck_size"].to_i
-    new_image.chest_size = stats["chest_size"].to_i
-    new_image.waist_size = stats["waist_size"].to_i
-    new_image.hip_size = stats["hip_size"].to_i
+    new_image.neck_size = stats["neckSize"].to_i
+    new_image.chest_size = stats["chestSize"].to_i
+    new_image.waist_size = stats["waistSize"].to_i
+    new_image.hip_size = stats["hipSize"].to_i
     new_image.user = current_user
     render json: Snapshot.last if new_image.save
   end
@@ -23,7 +23,7 @@ class SnapshotsController < ApiController
   private
 
   def snapshot_params
-    params.require(:snapshot).permit(:picture, :neck_size, :hip_size,
-                                     :waist_size, :chest_size, :note)
+    params.require(:snapshot).permit(:picture, :neckSize, :hipSize,
+                                     :waistSize, :chestSize, :note)
   end
 end
