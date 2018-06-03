@@ -1,6 +1,5 @@
-/* .nav {
-  margin-top: 5px;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid black;
-} */
+.nav {
+  border: 0px;
+  border-radius: 0px;
+  color: blue;
+}
