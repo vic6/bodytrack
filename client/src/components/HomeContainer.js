@@ -51,7 +51,7 @@ export default class HomeContainer extends Component {
     this.setState(prevState => ({ active: !prevState.active }));
   };
 
-  readFile = (event, file, stats) => {
+  readFile = (event, file, stats, resetForm) => {
     console.log('STATS', stats);
     event.preventDefault();
     if (file) {
@@ -59,41 +59,23 @@ export default class HomeContainer extends Component {
       formPayLoad.append('uploaded_image', file);
       formPayLoad.append('stats', JSON.stringify(stats));
       this.sendImageToController(formPayLoad);
+      resetForm(event);
     }
   };
 
-  logPicture = event => {
-    console.log(event.target.dataset.date);
-    console.log(event.target.dataset.waist);
-    // debugger;
-    // console.log(event.target.data('key').key);
-    console.log();
-    // console.log(event.target.firstChild)
-  };
-
-  myHandler1 = index => {
+  handleCarouselIndex1 = index => {
     const currentIndex = index;
     if (this.state.loaded) {
       this.setState({ index1: currentIndex });
-      console.log(this.state);
     }
   };
 
-  myHandler2 = index => {
+  handleCarouselIndex2 = index => {
     const currentIndex = index;
     if (this.state.loaded) {
       this.setState({ index2: currentIndex });
-      console.log(this.state);
     }
   };
-
-  // renderImages = () =>
-  //   this.state.snapshots.map(snap => (
-  //     <div data-date={snap.created_at} data-waist={snap.waist_size} role='presentation' onClick={(event)=> this.logPicture(event)} key={snap.id} id={snap.id}>
-  //       <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-  //       <p className={this.state.active ? null : 'legend'}>{snap.created_at.match('[^T]*')}</p>
-  //     </div>
-  //   ));
 
   renderImages = () => {
     const { snapshots, index1, index2 } = this.state;
@@ -106,7 +88,7 @@ export default class HomeContainer extends Component {
                 id="carousel1"
                 selectedItem={index1}
                 showThumbs={false}
-                onChange={this.myHandler1}
+                onChange={this.handleCarouselIndex1}
                 infiniteLoop>
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id} id={snap.id}>
@@ -124,7 +106,7 @@ export default class HomeContainer extends Component {
                 id="carousel2"
                 selectedItem={index2}
                 showThumbs={false}
-                onChange={this.myHandler2}
+                onChange={this.handleCarouselIndex2}
                 infiniteLoop>
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id}>

@@ -14,9 +14,17 @@ export default class AddPictureForm extends Component {
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({
-      stats: {...this.state.stats, [name]: value}
+      stats: { ...this.state.stats, [name]: value }
     });
     console.log(this.state.stats);
+  };
+
+  resetFrom = event => {
+    event.target.reset();
+    this.setState({
+      selectedFile: null,
+      stats: { chest_size: '', waist_size: '', neck_size: '', hip_size: '', weight: '' }
+    });
   };
 
   FieldGroup = ({ id, label, help, ...props }) => (
@@ -28,12 +36,10 @@ export default class AddPictureForm extends Component {
   );
 
   render() {
-    const { weight, neck_size, chest_size, hip_size, waist_size } = this.state;
+    const { weight, neck_size, chest_size, hip_size, waist_size, selectedFile, stats } = this.state;
     return (
       <div>
-        <form
-          onChange={this.handleChange}
-          onSubmit={event => this.props.readFile(event, this.state.selectedFile, this.state.stats)}>
+        <form onSubmit={event => this.props.readFile(event, selectedFile, stats, this.resetFrom)}>
           <this.FieldGroup
             id="formControlsText"
             type="number"
@@ -41,6 +47,7 @@ export default class AddPictureForm extends Component {
             placeholder="Weight"
             name="weight"
             value={weight}
+            onChange={this.handleChange}
           />
           <this.FieldGroup
             id="formControlsText"
@@ -49,6 +56,7 @@ export default class AddPictureForm extends Component {
             placeholder="Neck Size"
             name="neck_size"
             value={neck_size}
+            onChange={this.handleChange}
           />
           <this.FieldGroup
             id="formControlsText"
@@ -57,6 +65,7 @@ export default class AddPictureForm extends Component {
             placeholder="Chest Size"
             name="chest_size"
             value={chest_size}
+            onChange={this.handleChange}
           />
           <this.FieldGroup
             label="Waist Size"
@@ -64,6 +73,7 @@ export default class AddPictureForm extends Component {
             type="number"
             value={waist_size}
             name="waist_size"
+            onChange={this.handleChange}
           />
           <this.FieldGroup
             label="Hip Size"
@@ -71,6 +81,7 @@ export default class AddPictureForm extends Component {
             type="number"
             value={hip_size}
             name="hip_size"
+            onChange={this.handleChange}
           />
           <input
             ref={this.setInputFormRef}
