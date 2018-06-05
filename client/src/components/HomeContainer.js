@@ -27,10 +27,12 @@ export default class HomeContainer extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log('RESPONSE', res);
-        this.setState({ snapshots: res.snapshots, loaded: true})
-        this.setState({index2: this.state.snapshots.length - 1 || 0})
+        // console.log('HELLO')
+        this.setState({ snapshots: res.snapshots, loaded: true, index2: res.snapshots.length - 1 || 0})
+        // console.log('Snapinitup', this.state.snapshots)
+        // console.log('LENGTH', this.state.snapshots.length - 1, res.snapshots.length - 1, this.state.index2)
       })
+      .then(() => this.setState({index2: this.state.snapshots.length - 1 || 0}) )
       .catch(errors => console.log(errors));
   };
 
@@ -48,6 +50,33 @@ export default class HomeContainer extends Component {
       .catch(err => console.log(err));
   };
 
+  deleteImage = (snapshotId) => {
+    console.log("ID", snapshotId)
+    fetch(`/snapshots/${snapshotId}`, {
+      method: 'DELETE',
+      body: snapshotId,
+      headers: {
+        token: Auth.getToken(),
+        Authorization: `Token ${Auth.getToken()}`
+      }
+    })
+    .then(res => console.log('RESPONSE',res))
+    .then(
+      () => {
+        if (this.state.index1 === this.state.snapshots.length - 1) {
+          let newIndex = this.state.snapshots.length - 2;
+          if (newIndex < 0) newIndex = 0;
+          console.log('NEW INDEX', this.state.index2)
+          return this.setState({index1: newIndex, index2: this.state.snapshots.length - 1 })
+        }
+        console.log('NEW INDEX', this.state.index2)
+          return this.setState({index2: this.state.snapshots.length - 1 })
+
+      }
+    )
+    .then(()=>this.getUserSnapshots())
+  }
+
   toggleClass = () => {
     this.setState(prevState => ({ active: !prevState.active }));
   };
@@ -60,7 +89,7 @@ export default class HomeContainer extends Component {
       formPayLoad.append('uploaded_image', file);
       formPayLoad.append('stats', JSON.stringify(stats));
       this.sendImageToController(formPayLoad);
-      resetForm(event);
+      // resetForm(event);
     }
   };
 
@@ -196,6 +225,9 @@ export default class HomeContainer extends Component {
                     <TableCell>Hip</TableCell>
                     <TableCell>{snapshots[index2].hipSize || 0}</TableCell>
                   </TableRow>
+                  <TableRow>
+                    <TableCell onClick={()=>this.deleteImage(snapshots[index2].id)}>Delete snapshot</TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Paper>
@@ -208,6 +240,8 @@ export default class HomeContainer extends Component {
 
   render() {
     const { loaded, snapshots, index1, index2 } = this.state;
+    console.log('INDEX1', index1, 'INDEX2', index2)
+    console.log('SNAPSHOTS', snapshots)
     const currentSlide1 = loaded && snapshots.length ? snapshots[index1].picture.url : '';
     const currentSlide2 = loaded && snapshots.length ? snapshots[index2].picture.url : '';
 

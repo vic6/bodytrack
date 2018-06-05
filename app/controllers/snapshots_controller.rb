@@ -20,6 +20,14 @@ class SnapshotsController < ApiController
     render json: Snapshot.last if new_image.save
   end
 
+  def destroy
+    p "*" * 20
+    p params
+    p "*" * 20
+    current_user.snapshots.find(params['id']).destroy
+    render json: { "message": "Snapshot deleted" }
+  end
+
   private
 
   def snapshot_params
