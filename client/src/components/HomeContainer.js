@@ -27,12 +27,13 @@ export default class HomeContainer extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        // console.log('HELLO')
-        this.setState({ snapshots: res.snapshots, loaded: true, index2: res.snapshots.length - 1 || 0})
-        // console.log('Snapinitup', this.state.snapshots)
-        // console.log('LENGTH', this.state.snapshots.length - 1, res.snapshots.length - 1, this.state.index2)
+        this.setState({
+          snapshots: res.snapshots.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)),
+          loaded: true,
+          index2: res.snapshots.length - 1 || 0
+        });
       })
-      .then(() => this.setState({index2: this.state.snapshots.length - 1 || 0}) )
+      .then(() => this.setState({ index2: this.state.snapshots.length - 1 || 0 }))
       .catch(errors => console.log(errors));
   };
 
@@ -50,8 +51,8 @@ export default class HomeContainer extends Component {
       .catch(err => console.log(err));
   };
 
-  deleteImage = (snapshotId) => {
-    console.log("ID", snapshotId)
+  deleteImage = snapshotId => {
+    console.log('ID', snapshotId);
     fetch(`/snapshots/${snapshotId}`, {
       method: 'DELETE',
       body: snapshotId,
@@ -60,29 +61,21 @@ export default class HomeContainer extends Component {
         Authorization: `Token ${Auth.getToken()}`
       }
     })
-    .then(res => console.log('RESPONSE',res))
-    .then(
-      () => {
+      .then(res => console.log('RESPONSE', res))
+      .then(() => {
         if (this.state.index1 === this.state.snapshots.length - 1) {
           let newIndex = this.state.snapshots.length - 2;
           if (newIndex < 0) newIndex = 0;
-          console.log('NEW INDEX', this.state.index2)
-          return this.setState({index1: newIndex, index2: this.state.snapshots.length - 1 })
+          console.log('NEW INDEX', this.state.index2);
+          return this.setState({ index1: newIndex, index2: this.state.snapshots.length - 1 });
         }
-        console.log('NEW INDEX', this.state.index2)
-          return this.setState({index2: this.state.snapshots.length - 1 })
-
-      }
-    )
-    .then(()=>this.getUserSnapshots())
-  }
-
-  toggleClass = () => {
-    this.setState(prevState => ({ active: !prevState.active }));
+        console.log('NEW INDEX', this.state.index2);
+        return this.setState({ index2: this.state.snapshots.length - 1 });
+      })
+      .then(() => this.getUserSnapshots());
   };
 
   readFile = (event, file, stats, resetForm) => {
-    console.log('STATS', stats);
     event.preventDefault();
     if (file) {
       const formPayLoad = new FormData();
@@ -153,7 +146,7 @@ export default class HomeContainer extends Component {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Measurement</TableCell>
+                    <TableCell>Measurement{snapshots[index1].id}</TableCell>
                     <TableCell>Result(inches)</TableCell>
                   </TableRow>
                 </TableHead>
@@ -170,19 +163,19 @@ export default class HomeContainer extends Component {
                   </TableRow>
                   <TableRow>
                     <TableCell>Neck</TableCell>
-                    <TableCell>{snapshots[index1].neckSize || 0}</TableCell>
+                    <TableCell>{snapshots[index1].neck_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Chest</TableCell>
-                    <TableCell>{snapshots[index1].chestSize || 0}</TableCell>
+                    <TableCell>{snapshots[index1].chest_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Waist</TableCell>
-                    <TableCell>{snapshots[index1].waistSize || 0}</TableCell>
+                    <TableCell>{snapshots[index1].waist_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Hip</TableCell>
-                    <TableCell>{snapshots[index1].hipSize || 0}</TableCell>
+                    <TableCell>{snapshots[index1].hip_size || 0}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -194,7 +187,7 @@ export default class HomeContainer extends Component {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Measurement</TableCell>
+                    <TableCell>Measurement{snapshots[index2].id}</TableCell>
                     <TableCell>Result(inches)</TableCell>
                   </TableRow>
                 </TableHead>
@@ -211,22 +204,24 @@ export default class HomeContainer extends Component {
                   </TableRow>
                   <TableRow>
                     <TableCell>Neck</TableCell>
-                    <TableCell>{snapshots[index2].neckSize || 0}</TableCell>
+                    <TableCell>{snapshots[index2].neck_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Chest</TableCell>
-                    <TableCell>{snapshots[index2].chestSize || 0}</TableCell>
+                    <TableCell>{snapshots[index2].chest_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Waist</TableCell>
-                    <TableCell>{snapshots[index2].waistSize || 0}</TableCell>
+                    <TableCell>{snapshots[index2].waist_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Hip</TableCell>
-                    <TableCell>{snapshots[index2].hipSize || 0}</TableCell>
+                    <TableCell>{snapshots[index2].hip_size || 0}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell onClick={()=>this.deleteImage(snapshots[index2].id)}>Delete snapshot</TableCell>
+                    <TableCell onClick={() => this.deleteImage(snapshots[index2].id)}>
+                      Delete snapshot
+                    </TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -240,8 +235,9 @@ export default class HomeContainer extends Component {
 
   render() {
     const { loaded, snapshots, index1, index2 } = this.state;
-    console.log('INDEX1', index1, 'INDEX2', index2)
-    console.log('SNAPSHOTS', snapshots)
+
+    console.log('INDEX1', index1, 'INDEX2', index2);
+    console.log('SNAPSHOTS', snapshots);
     const currentSlide1 = loaded && snapshots.length ? snapshots[index1].picture.url : '';
     const currentSlide2 = loaded && snapshots.length ? snapshots[index2].picture.url : '';
 
