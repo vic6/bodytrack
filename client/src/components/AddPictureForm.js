@@ -5,7 +5,7 @@ import './AddPictureForm.css';
 export default class AddPictureForm extends Component {
   state = {
     selectedFile: null,
-    stats: { chestSize: '', waistSize: '', neckSize: '', hipSize: '', weight: '' }
+    stats: { chest_size: '', waist_size: '', neck_size: '', hip_size: '', weight: '' }
   };
 
   handleFileChange = event => {
@@ -24,7 +24,7 @@ export default class AddPictureForm extends Component {
     event.target.reset();
     this.setState({
       selectedFile: null,
-      stats: { chestSize: '', waistSize: '', neckSize: '', hipSize: '', weight: '' }
+      stats: { chest_size: '', waist_size: '', neck_size: '', hip_size: '', weight: '' }
     });
   };
 
@@ -37,7 +37,7 @@ export default class AddPictureForm extends Component {
   );
 
   render() {
-    const { weight, neckSize, chestSize, hipSize, waistSize, selectedFile, stats } = this.state;
+    const { weight, neck_size, chest_size, hip_size, waist_size, selectedFile, stats } = this.state;
     return (
       <div className='picture-form'>
         <PageHeader as='h2'>
@@ -59,8 +59,8 @@ export default class AddPictureForm extends Component {
               type="number"
               label="Neck Size"
               placeholder="Neck Size"
-              name="neckSize"
-              value={neckSize}
+              name="neck_size"
+              value={neck_size}
               onChange={this.handleChange}
             />
             <this.FieldGroup
@@ -68,24 +68,24 @@ export default class AddPictureForm extends Component {
               type="number"
               label="Chest Size"
               placeholder="Chest Size"
-              name="chestSize"
-              value={chestSize}
+              name="chest_size"
+              value={chest_size}
               onChange={this.handleChange}
             />
             <this.FieldGroup
               label="Waist Size"
               placeholder="Waist size"
               type="number"
-              value={waistSize}
-              name="waistSize"
+              value={waist_size}
+              name="waist_size"
               onChange={this.handleChange}
             />
             <this.FieldGroup
               label="Hip Size"
               placeholder="Hip size"
               type="number"
-              value={hipSize}
-              name="hipSize"
+              value={hip_size}
+              name="hip_size"
               onChange={this.handleChange}
             />
             <input
