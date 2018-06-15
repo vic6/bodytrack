@@ -57,7 +57,7 @@ export default class AddPictureForm extends Component {
   };
 
   render() {
-    const { weight, neck_size, chest_size, hip_size, waist_size, selectedFile, stats } = this.state;
+    const { weight, neck_size: neckSize, chest_size: chestSize, hip_size: hipSize, waist_size: waistSize, selectedFile, stats } = this.state;
     return (
       <div>
         {!this.state.showForm ? (
@@ -83,7 +83,7 @@ export default class AddPictureForm extends Component {
                   label="Neck Size"
                   placeholder="Neck Size"
                   name="neck_size"
-                  value={neck_size}
+                  value={neckSize}
                   onChange={this.handleChange}
                 />
                 <this.FieldGroup
@@ -92,14 +92,14 @@ export default class AddPictureForm extends Component {
                   label="Chest Size"
                   placeholder="Chest Size"
                   name="chest_size"
-                  value={chest_size}
+                  value={chestSize}
                   onChange={this.handleChange}
                 />
                 <this.FieldGroup
                   label="Waist Size"
                   placeholder="Waist size"
                   type="number"
-                  value={waist_size}
+                  value={waistSize}
                   name="waist_size"
                   onChange={this.handleChange}
                 />
@@ -107,7 +107,7 @@ export default class AddPictureForm extends Component {
                   label="Hip Size"
                   placeholder="Hip size"
                   type="number"
-                  value={hip_size}
+                  value={hipSize}
                   name="hip_size"
                   onChange={this.handleChange}
                 />

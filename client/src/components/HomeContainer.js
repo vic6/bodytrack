@@ -80,7 +80,7 @@ export default class HomeContainer extends Component {
     if (file) {
       const formPayLoad = new FormData();
       formPayLoad.append('uploaded_image', file);
-      formPayLoad.append('stats', JSON.stringify(stats));
+      formPayLoad.append('stats_attributes', JSON.stringify(stats));
       this.sendImageToController(formPayLoad);
       // resetForm(event);
     }
@@ -116,7 +116,7 @@ export default class HomeContainer extends Component {
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id} id={snap.id}>
                     <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                    <p className="legend">{snap.created_at.match('[^T]*')}</p>
+                    {/* <p className="legend">{snap.created_at.match('[^T]*')}</p> */}
                   </div>
                 ))}
               </Carousel>
@@ -134,7 +134,7 @@ export default class HomeContainer extends Component {
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id}>
                     <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                    <p className={'legend'}>{snap.created_at.match('[^T]*')}</p>
+                    {/* <p className={'legend'}>{snap.created_at.match('[^T]*')}</p> */}
                   </div>
                 ))}
               </Carousel>
@@ -155,7 +155,7 @@ export default class HomeContainer extends Component {
                     <TableCell component="th" scope="row">
                       Date
                     </TableCell>
-                    <TableCell>{snapshots[index1].created_at.match('[^T]*')}</TableCell>
+                    <TableCell>{new Date(snapshots[index1].created_at).toDateString()}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Weight</TableCell>
@@ -196,7 +196,7 @@ export default class HomeContainer extends Component {
                     <TableCell component="th" scope="row">
                       Date
                     </TableCell>
-                    <TableCell>{snapshots[index2].created_at.match('[^T]*')}</TableCell>
+                    <TableCell>{new Date(snapshots[index2].created_at).toDateString()}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Weight</TableCell>
@@ -222,7 +222,14 @@ export default class HomeContainer extends Component {
                     <TableCell onClick={() => this.deleteImage(snapshots[index2].id)}>
                       Delete snapshot
                     </TableCell>
+                    <TableCell />
                   </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      Edit snapshot
+                    </TableCell>
+                  </TableRow>
+
                 </TableBody>
               </Table>
             </Paper>
@@ -235,7 +242,6 @@ export default class HomeContainer extends Component {
 
   render() {
     const { loaded, snapshots, index1, index2 } = this.state;
-
     console.log('INDEX1', index1, 'INDEX2', index2);
     console.log('SNAPSHOTS', snapshots);
     const currentSlide1 = loaded && snapshots.length ? snapshots[index1].picture.url : '';
