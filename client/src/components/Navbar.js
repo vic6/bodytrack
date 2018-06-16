@@ -7,7 +7,7 @@ const NavBar = props => {
   console.log(props.isLoggedIn);
   return (
 
-    <Navbar className='nav' collapseOnSelect>
+    <Navbar collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
           <a href="/home">BodyTrack</a>
