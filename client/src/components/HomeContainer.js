@@ -51,6 +51,26 @@ export default class HomeContainer extends Component {
       .catch(err => console.log(err));
   };
 
+  editImageInfo = (event, snapshotId) => {
+    event.preventDefault();
+    const weight = event.target.weight.value;
+    const hip_size = event.target.hip_size.value;
+    const info = { weight, hip_size };
+    console.log(event);
+    console.log(info);
+    fetch(`/snapshots/${snapshotId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        snapshot: info
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        token: Auth.getToken(),
+        Authorization: `Token ${Auth.getToken()}`
+      }
+    });
+  };
+
   deleteImage = snapshotId => {
     console.log('ID', snapshotId);
     fetch(`/snapshots/${snapshotId}`, {
@@ -180,6 +200,15 @@ export default class HomeContainer extends Component {
                 </TableBody>
               </Table>
             </Paper>
+            <form onSubmit={event => this.editImageInfo(event, snapshots[index1].id)}>
+              <label>
+                Weight <input name="weight" type="text" value='5000' />
+              </label>
+              <label>
+                Hip Size<input name="hip_size" type="text" value='9000' />
+              </label>
+              <input name="submit" type="submit" />
+            </form>
           </Grid>
 
           <Grid item sm={6} xs={12}>
@@ -225,11 +254,8 @@ export default class HomeContainer extends Component {
                     <TableCell />
                   </TableRow>
                   <TableRow>
-                    <TableCell>
-                      Edit snapshot
-                    </TableCell>
+                    <TableCell>Edit snapshot</TableCell>
                   </TableRow>
-
                 </TableBody>
               </Table>
             </Paper>
