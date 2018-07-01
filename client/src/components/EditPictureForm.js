@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
-import { Button, Col, ControlLabel, HelpBlock, FormGroup, FormControl, PageHeader } from 'react-bootstrap';
-import './AddPictureForm.css';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
-export default class AddPictureForm extends Component {
-  state = {
-    selectedFile: null,
-    stats: { chest_size: '', waist_size: '', neck_size: '', hip_size: '', weight: '' }
-  };
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  formControl: {
+    margin: theme.spacing.unit
+  }
+});
 
-  handleFileChange = event => {
-    this.setState({ selectedFile: event.target.files[0] });
-  };
+export default class EditPictureForm extends Component {
 
-  handleChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      stats: { ...this.state.stats, [name]: value }
-    });
-    console.log(this.state.stats);
-  };
 
   resetFrom = event => {
     event.target.reset();
@@ -28,77 +31,68 @@ export default class AddPictureForm extends Component {
     });
   };
 
-  FieldGroup = ({ id, label, help, ...props }) => (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-
   render() {
-    const { weight, neck_size: neckSize, chest_size: chestSize, hip_size: hipSize, waist_size: waistSize, selectedFile, stats } = this.state;
+    const { snapshots, index2, classes } = this.props;
     return (
-      <div className='picture-form'>
-        <PageHeader as='h2'>
-          Add Image
-        </PageHeader>
-        <Col xs={12} s={6}>
-          <form onSubmit={event => this.props.readFile(event, selectedFile, stats, this.resetFrom)}>
-            <this.FieldGroup
-              id="formControlsText"
-              type="number"
-              label="Weight"
-              placeholder="Weight"
-              name="weight"
-              value={weight}
-              onChange={this.handleChange}
-            />
-            <this.FieldGroup
-              id="formControlsText"
-              type="number"
-              label="Neck Size"
-              placeholder="Neck Size"
-              name="neck_size"
-              value={neckSize}
-              onChange={this.handleChange}
-            />
-            <this.FieldGroup
-              id="formControlsText"
-              type="number"
-              label="Chest Size"
-              placeholder="Chest Size"
-              name="chest_size"
-              value={chestSize}
-              onChange={this.handleChange}
-            />
-            <this.FieldGroup
-              label="Waist Size"
-              placeholder="Waist size"
-              type="number"
-              value={waistSize}
-              name="waist_size"
-              onChange={this.handleChange}
-            />
-            <this.FieldGroup
-              label="Hip Size"
-              placeholder="Hip size"
-              type="number"
-              value={hipSize}
-              name="hip_size"
-              onChange={this.handleChange}
-            />
-            <input
-              ref={this.setInputFormRef}
-              onChange={this.handleFileChange}
-              type="file"
-              accept="image/*"
-            />
-            {/* <input type="submit" name="Submit" /> */}
-            <Button bsStyle='primary' block type='submit'>Upload</Button>
-          </form>
-        </Col>
-      </div>
+      <Grid item sm={6} xs={12}>
+        <Paper sm={6} xs={12}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Measurement{snapshots[index2].id}</TableCell>
+                <TableCell>Result(inches)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  Date
+                </TableCell>
+                <TableCell>{new Date(snapshots[index2].created_at).toDateString()}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Weight</TableCell>
+                <TableCell>
+                  <Input value={this.props.weight} onChange={this.props.handleChange} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Neck</TableCell>
+                <TableCell>
+                  <Input value={this.props.neck_size} onChange={this.props.handleChange} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Chest</TableCell>
+                <TableCell>
+                  <Input value={this.props.chest_size} onChange={this.props.handleChange} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Waist</TableCell>
+                <TableCell>
+                  <Input value={this.props.waist_size} onChange={this.props.handleChange} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Hip</TableCell>
+                <TableCell>
+                  <Input value={this.props.hip_size} onChange={this.props.handleChange} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell onClick={() => this.deleteImage(snapshots[index2].id)}>
+                  Delete snapshot
+                </TableCell>
+                <TableCell />
+              </TableRow>
+              <TableRow>
+                <TableCell>Edit snapshot</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+      </Grid>
     );
   }
 }
