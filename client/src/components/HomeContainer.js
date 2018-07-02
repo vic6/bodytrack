@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Home from './Home';
 import Auth from '../modules/Auth';
+import EditSnapshotForm from './EditSnapshotForm';
+import SnapshotTable from './SnapshotTable';
 
 export default class HomeContainer extends Component {
-  state = { snapshots: [], loaded: false, index1: 0, index2: 0 };
+  state = { snapshots: [], loaded: false, index1: 0, index2: 0, editSnapshot: false };
 
   componentDidMount() {
     this.getUserSnapshots();
@@ -51,17 +48,13 @@ export default class HomeContainer extends Component {
       .catch(err => console.log(err));
   };
 
-  editImageInfo = (event, snapshotId) => {
+  sendUpdatedSnapshotData = (event, data, snapshotId) => {
+    console.log('WHY')
     event.preventDefault();
-    const weight = event.target.weight.value;
-    const hip_size = event.target.hip_size.value;
-    const info = { weight, hip_size };
-    console.log(event);
-    console.log(info);
     fetch(`/snapshots/${snapshotId}`, {
       method: 'PUT',
       body: JSON.stringify({
-        snapshot: info
+        snapshot: data
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -69,6 +62,16 @@ export default class HomeContainer extends Component {
         Authorization: `Token ${Auth.getToken()}`
       }
     });
+  }
+
+  editImage = (snapshotId) => {
+    this.setState({ editSnapshot: !this.state.editSnapshot });
+    console.log(snapshotId);
+    // const weight = event.target.weight.value;
+    // const hip_size = event.target.hip_size.value;
+    // const info = { weight, hip_size };
+    // console.log(info);
+
   };
 
   deleteImage = snapshotId => {
@@ -109,19 +112,19 @@ export default class HomeContainer extends Component {
   handleCarouselIndex1 = index => {
     const currentIndex = index;
     if (this.state.loaded) {
-      this.setState({ index1: currentIndex });
+      this.setState({ index1: currentIndex, editSnapshot: false });
     }
   };
 
   handleCarouselIndex2 = index => {
     const currentIndex = index;
     if (this.state.loaded) {
-      this.setState({ index2: currentIndex });
+      this.setState({ index2: currentIndex, editSnapshot: false });
     }
   };
 
   renderImages = () => {
-    const { snapshots, index1, index2 } = this.state;
+    const { snapshots, index1, index2, editSnapshot } = this.state;
     if (snapshots.length) {
       return (
         <Grid container spacing={8}>
@@ -154,7 +157,6 @@ export default class HomeContainer extends Component {
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id}>
                     <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                    {/* <p className={'legend'}>{snap.created_at.match('[^T]*')}</p> */}
                   </div>
                 ))}
               </Carousel>
@@ -163,49 +165,30 @@ export default class HomeContainer extends Component {
 
           <Grid item sm={6} xs={12}>
             <Paper sm={6} xs={12}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Measurement{snapshots[index1].id}</TableCell>
-                    <TableCell>Result(inches)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Date
-                    </TableCell>
-                    <TableCell>{new Date(snapshots[index1].created_at).toDateString()}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Weight</TableCell>
-                    <TableCell>{snapshots[index1].weight || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Neck</TableCell>
-                    <TableCell>{snapshots[index1].neck_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Chest</TableCell>
-                    <TableCell>{snapshots[index1].chest_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Waist</TableCell>
-                    <TableCell>{snapshots[index1].waist_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Hip</TableCell>
-                    <TableCell>{snapshots[index1].hip_size || 0}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              {editSnapshot ? (
+                <EditSnapshotForm
+                  snapshots={snapshots}
+                  index={index1}
+                  editImage={this.editImage}
+                  sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
+                  deleteImage={this.deleteImage}
+                 />
+              ) : (
+                <SnapshotTable
+                  snapshots={snapshots}
+                  index={index1}
+                  editImage={this.editImage}
+                  deleteImage={this.deleteImage}
+                />
+              )}
             </Paper>
+
             <form onSubmit={event => this.editImageInfo(event, snapshots[index1].id)}>
               <label>
-                Weight <input name="weight" type="text" value='5000' />
+                Weight <input name="weight" type="text" value="5000" />
               </label>
               <label>
-                Hip Size<input name="hip_size" type="text" value='9000' />
+                Hip Size<input name="hip_size" type="text" value="9000" />
               </label>
               <input name="submit" type="submit" />
             </form>
@@ -213,51 +196,7 @@ export default class HomeContainer extends Component {
 
           <Grid item sm={6} xs={12}>
             <Paper sm={6} xs={12}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Measurement{snapshots[index2].id}</TableCell>
-                    <TableCell>Result(inches)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Date
-                    </TableCell>
-                    <TableCell>{new Date(snapshots[index2].created_at).toDateString()}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Weight</TableCell>
-                    <TableCell>{snapshots[index2].weight || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Neck</TableCell>
-                    <TableCell>{snapshots[index2].neck_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Chest</TableCell>
-                    <TableCell>{snapshots[index2].chest_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Waist</TableCell>
-                    <TableCell>{snapshots[index2].waist_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Hip</TableCell>
-                    <TableCell>{snapshots[index2].hip_size || 0}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell onClick={() => this.deleteImage(snapshots[index2].id)}>
-                      Delete snapshot
-                    </TableCell>
-                    <TableCell />
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Edit snapshot</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <SnapshotTable snapshots={snapshots} index={index2} deleteImage={this.deleteImage} />
             </Paper>
           </Grid>
         </Grid>
