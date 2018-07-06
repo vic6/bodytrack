@@ -124,6 +124,7 @@ export default class AddPictureForm extends Component {
                 <Button xs={6} bsStyle="primary" type="submit">
                   Upload
                 </Button>
+                <input label='submit' type='submit'/>
               </form>
             </Col>
           </div>
@@ -131,8 +132,7 @@ export default class AddPictureForm extends Component {
         <div style={{float:"left", clear:"both"}}
           ref={el => {
             this.pageBottom = el;
-          }}>hello
-        </div>
+          }} />
       </div>
     );
   }

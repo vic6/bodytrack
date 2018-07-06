@@ -35,7 +35,6 @@ export default class HomeContainer extends Component {
   };
 
   sendImageToController = formPayLoad => {
-    console.log('Payload', formPayLoad);
     fetch('/snapshots', {
       method: 'POST',
       body: formPayLoad,
@@ -49,7 +48,6 @@ export default class HomeContainer extends Component {
   };
 
   sendUpdatedSnapshotData = (event, data, snapshotId) => {
-    console.log('WHY')
     event.preventDefault();
     fetch(`/snapshots/${snapshotId}`, {
       method: 'PUT',
@@ -61,12 +59,13 @@ export default class HomeContainer extends Component {
         token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       }
-    });
+    })
+    .then(this.setState({editSnapshot: false}))
+    .then(() => this.getUserSnapshots())
   }
 
-  editImage = (snapshotId) => {
+  toggleEditSnapshot = () => {
     this.setState({ editSnapshot: !this.state.editSnapshot });
-    console.log(snapshotId);
     // const weight = event.target.weight.value;
     // const hip_size = event.target.hip_size.value;
     // const info = { weight, hip_size };
@@ -139,7 +138,6 @@ export default class HomeContainer extends Component {
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id} id={snap.id}>
                     <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
-                    {/* <p className="legend">{snap.created_at.match('[^T]*')}</p> */}
                   </div>
                 ))}
               </Carousel>
@@ -169,7 +167,7 @@ export default class HomeContainer extends Component {
                 <EditSnapshotForm
                   snapshots={snapshots}
                   index={index1}
-                  editImage={this.editImage}
+                  toggleEditSnapshot={this.toggleEditSnapshot}
                   sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
                   deleteImage={this.deleteImage}
                  />
@@ -177,21 +175,11 @@ export default class HomeContainer extends Component {
                 <SnapshotTable
                   snapshots={snapshots}
                   index={index1}
-                  editImage={this.editImage}
+                  toggleEditSnapshot={this.toggleEditSnapshot}
                   deleteImage={this.deleteImage}
                 />
               )}
             </Paper>
-
-            <form onSubmit={event => this.editImageInfo(event, snapshots[index1].id)}>
-              <label>
-                Weight <input name="weight" type="text" value="5000" />
-              </label>
-              <label>
-                Hip Size<input name="hip_size" type="text" value="9000" />
-              </label>
-              <input name="submit" type="submit" />
-            </form>
           </Grid>
 
           <Grid item sm={6} xs={12}>

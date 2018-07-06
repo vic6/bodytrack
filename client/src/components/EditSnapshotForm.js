@@ -8,22 +8,12 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  formControl: {
-    margin: theme.spacing.unit
-  }
-});
-
 export default class EditSnapshotForm extends Component {
   state = {
-    chest_size: this.props.snapshots[this.props.index].chestSize,
-    waist_size: this.props.waist_size,
-    neck_size: this.props.waist_size,
-    hip_size: this.props.waist_size,
+    chest_size: this.props.snapshots[this.props.index].chest_size,
+    waist_size: this.props.snapshots[this.props.index].waist_size,
+    neck_size: this.props.snapshots[this.props.index].neck_size,
+    hip_size: this.props.snapshots[this.props.index].hip_size,
     weight: this.props.snapshots[this.props.index].weight
   };
 
@@ -43,9 +33,8 @@ export default class EditSnapshotForm extends Component {
 
   render() {
     const { snapshots, index, sendUpdatedSnapshotData } = this.props;
-    console.log('ID', snapshots[index].id);
     return (
-      <form onSubmit={(event)=>sendUpdatedSnapshotData(event, this.state, snapshots[index].id)}>
+      <form onSubmit={event => sendUpdatedSnapshotData(event, this.state, snapshots[index].id)}>
         <Table onChange={this.handleChange}>
           <TableHead>
             <TableRow>
@@ -63,24 +52,32 @@ export default class EditSnapshotForm extends Component {
             <TableRow>
               <TableCell>Weight</TableCell>
               <TableCell>
-                <Input name="weight" autoComplete="off" fullWidth value={this.state.weight} />
+                <Input name="weight" autoComplete="off" fullWidth value={this.state.weight || 0} />
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Neck</TableCell>
-              <TableCell>{snapshots[index].neck_size || 0}</TableCell>
+              <TableCell>
+                <Input name="neck_size" autoComplete="off" fullWidth value={this.state.neck_size} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Chest</TableCell>
-              <TableCell>{snapshots[index].chest_size || 0}</TableCell>
+              <TableCell>
+                <Input name="chest_size" autoComplete="off" fullWidth value={this.state.chest_size} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Waist</TableCell>
-              <TableCell>{snapshots[index].waist_size || 0}</TableCell>
+              <TableCell>
+                <Input name="waist_size" autoComplete="off" fullWidth value={this.state.waist_size} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Hip</TableCell>
-              <TableCell>{snapshots[index].hip_size || 0}</TableCell>
+              <TableCell>
+                <Input name="hip_size" autoComplete="off" fullWidth value={this.state.hip_size} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell onClick={() => this.props.deleteImage(snapshots[index].id)}>
@@ -89,14 +86,14 @@ export default class EditSnapshotForm extends Component {
               <TableCell />
             </TableRow>
             <TableRow>
-              <TableCell onClick={() => this.props.editImage(snapshots[index].id)}>
+              <TableCell onClick={() => this.props.toggleEditSnapshot(snapshots[index].id)}>
                 Edit snapshot
               </TableCell>
               <TableCell />
             </TableRow>
           </TableBody>
         </Table>
-        <input type='submit'/>
+        <input type="submit" />
       </form>
     );
   }

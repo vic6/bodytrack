@@ -50,7 +50,7 @@ export default class SnapshotData extends Component {
             <TableCell />
           </TableRow>
           <TableRow>
-            <TableCell onClick={() => this.props.editImage(snapshots[index].id)}>
+            <TableCell onClick={() => this.props.toggleEditSnapshot(snapshots[index].id)}>
               Edit snapshot
             </TableCell>
             <TableCell />

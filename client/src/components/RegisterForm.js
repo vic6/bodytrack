@@ -15,7 +15,7 @@ export default class RegisterForm extends Component {
     const { name, username, email, password } = this.state;
 
     return (
-      <form>
+      <form onSubmit={(event)=>this.props.handleRegisterSubmit(event, this.state)}>
         <FormGroup>
           <FormControl
             type="text"
@@ -52,6 +52,7 @@ export default class RegisterForm extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
+        <input type='submit'/>
       </form>
     );
   }
