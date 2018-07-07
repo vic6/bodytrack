@@ -29,7 +29,7 @@ export default class AddPictureForm extends Component {
     console.log(this.state.stats);
   };
 
-  resetFrom = event => {
+  resetForm = event => {
     event.target.reset();
     this.setState({
       selectedFile: null,
@@ -67,7 +67,7 @@ export default class AddPictureForm extends Component {
             <PageHeader as="h2">Add Image</PageHeader>
             <Col xs={10} s={6} m={8}>
               <form
-                onSubmit={event => this.props.readFile(event, selectedFile, stats, this.resetFrom)}>
+                onSubmit={event => this.props.readFile(event, selectedFile, stats, this.resetForm)}>
                 <this.FieldGroup
                   id="formControlsText"
                   type="number"

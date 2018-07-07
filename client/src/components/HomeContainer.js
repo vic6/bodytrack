@@ -60,17 +60,12 @@ export default class HomeContainer extends Component {
         Authorization: `Token ${Auth.getToken()}`
       }
     })
-    .then(this.setState({editSnapshot: false}))
-    .then(() => this.getUserSnapshots())
-  }
+      .then(this.setState({ editSnapshot: false }))
+      .then(() => this.getUserSnapshots());
+  };
 
   toggleEditSnapshot = () => {
     this.setState({ editSnapshot: !this.state.editSnapshot });
-    // const weight = event.target.weight.value;
-    // const hip_size = event.target.hip_size.value;
-    // const info = { weight, hip_size };
-    // console.log(info);
-
   };
 
   deleteImage = snapshotId => {
@@ -127,17 +122,18 @@ export default class HomeContainer extends Component {
     if (snapshots.length) {
       return (
         <Grid container spacing={8}>
-          <Grid item sm={6} xs={12}>
-            <Paper sm={6} xs={12}>
+          <Grid item sm={6} xs={8}>
+            <Paper sm={6} xs={8}>
               <Carousel
                 id="carousel1"
                 selectedItem={index1}
                 showThumbs={false}
                 onChange={this.handleCarouselIndex1}
-                infiniteLoop>
+                infiniteLoop
+              >
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id} id={snap.id}>
-                    <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
+                    <img alt="snapshot" src={snap.picture.url} max-width="10%" height="500px" />
                   </div>
                 ))}
               </Carousel>
@@ -151,7 +147,8 @@ export default class HomeContainer extends Component {
                 selectedItem={index2}
                 showThumbs={false}
                 onChange={this.handleCarouselIndex2}
-                infiniteLoop>
+                infiniteLoop
+              >
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id}>
                     <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
@@ -162,30 +159,41 @@ export default class HomeContainer extends Component {
           </Grid>
 
           <Grid item sm={6} xs={12}>
-            <Paper sm={6} xs={12}>
-              {editSnapshot ? (
-                <EditSnapshotForm
-                  snapshots={snapshots}
-                  index={index1}
-                  toggleEditSnapshot={this.toggleEditSnapshot}
-                  sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
-                  deleteImage={this.deleteImage}
-                 />
-              ) : (
-                <SnapshotTable
-                  snapshots={snapshots}
-                  index={index1}
-                  toggleEditSnapshot={this.toggleEditSnapshot}
-                  deleteImage={this.deleteImage}
-                />
-              )}
-            </Paper>
+            {editSnapshot ? (
+              <EditSnapshotForm
+                snapshots={snapshots}
+                index={index1}
+                toggleEditSnapshot={this.toggleEditSnapshot}
+                sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
+                deleteImage={this.deleteImage}
+              />
+            ) : (
+              <SnapshotTable
+                snapshots={snapshots}
+                index={index1}
+                toggleEditSnapshot={this.toggleEditSnapshot}
+                deleteImage={this.deleteImage}
+              />
+            )}
           </Grid>
 
           <Grid item sm={6} xs={12}>
-            <Paper sm={6} xs={12}>
-              <SnapshotTable snapshots={snapshots} index={index2} deleteImage={this.deleteImage} />
-            </Paper>
+            {editSnapshot ? (
+              <EditSnapshotForm
+                snapshots={snapshots}
+                index={index2}
+                toggleEditSnapshot={this.toggleEditSnapshot}
+                sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
+                deleteImage={this.deleteImage}
+              />
+            ) : (
+              <SnapshotTable
+                snapshots={snapshots}
+                index={index2}
+                toggleEditSnapshot={this.toggleEditSnapshot}
+                deleteImage={this.deleteImage}
+              />
+            )}
           </Grid>
         </Grid>
       );
