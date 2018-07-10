@@ -6,7 +6,6 @@ import './NavBar.css'
 const NavBar = props => {
   console.log(props.isLoggedIn);
   return (
-
     <Navbar collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>

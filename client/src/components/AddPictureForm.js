@@ -47,7 +47,6 @@ export default class AddPictureForm extends Component {
 
   toggleForm = () => {
     this.pageBottom.scrollIntoView();
-
     this.setState({ showForm: !this.state.showForm });
     this.scrollToBottom();
   };
@@ -57,7 +56,15 @@ export default class AddPictureForm extends Component {
   };
 
   render() {
-    const { weight, neck_size: neckSize, chest_size: chestSize, hip_size: hipSize, waist_size: waistSize, selectedFile, stats } = this.state;
+    const {
+      weight,
+      neck_size: neckSize,
+      chest_size: chestSize,
+      hip_size: hipSize,
+      waist_size: waistSize,
+      selectedFile,
+      stats
+    } = this.state;
     return (
       <div>
         {!this.state.showForm ? (
@@ -67,7 +74,8 @@ export default class AddPictureForm extends Component {
             <PageHeader as="h2">Add Image</PageHeader>
             <Col xs={10} s={6} m={8}>
               <form
-                onSubmit={event => this.props.readFile(event, selectedFile, stats, this.resetForm)}>
+                onSubmit={event => this.props.readFile(event, selectedFile, stats, this.resetForm)}
+              >
                 <this.FieldGroup
                   id="formControlsText"
                   type="number"
@@ -124,15 +132,17 @@ export default class AddPictureForm extends Component {
                 <Button xs={6} bsStyle="primary" type="submit">
                   Upload
                 </Button>
-                <input label='submit' type='submit'/>
+                <input label="submit" type="submit" />
               </form>
             </Col>
           </div>
         )}
-        <div style={{float:"left", clear:"both"}}
+        <div
+          style={{ float: 'left', clear: 'both' }}
           ref={el => {
             this.pageBottom = el;
-          }} />
+          }}
+        />
       </div>
     );
   }

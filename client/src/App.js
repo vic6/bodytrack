@@ -8,6 +8,7 @@ import HomeContainer from './components/HomeContainer';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import NavBar from './components/NavBar';
+import Landing from './components/Landing';
 
 class App extends Component {
   state = { auth: Auth.isUserAuthenticated(), errors: null };
@@ -113,6 +114,8 @@ class App extends Component {
             <Route
               path="/home"
               render={() => (this.state.auth ? <HomeContainer /> : <Redirect to="/login" />)}
+            />
+            <Route exact path="/" render={()=> <Landing />}
             />
           </div>
         </Router>

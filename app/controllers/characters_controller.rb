@@ -13,12 +13,6 @@ class CharactersController < ApiController
 
   def create
     character = current_user.characters.build(character_params)
-    # character = Character.new
-    # character.name = params['character']['name']
-    # character.description = params['character']['description']
-    # character.user = current_user
-
-
     if character.save
       render json: {
         message: 'ok',
@@ -26,6 +20,32 @@ class CharactersController < ApiController
       }
     else
       render json: { message: 'Could not create character' }
+    end
+  end
+
+  def edit
+    character = Character.find(params[:id])
+  end
+
+  def update
+    character = Character.find(params[:id])
+    updated_character = {}
+    if params['character']['name']
+      # name = {name: params['character']['name']}
+      updated_character['name'] = params['character']['name']
+    end
+    if params['character']['description']
+      # description = {description: params['character']['description']}
+      updated_character['description'] = params['character']['description']
+    end
+    p '@'* 50
+    p character_params
+    p updated_character
+    p '@'* 50
+    if character.update(updated_character)
+      render json: {success: "Character Updated"}
+    else
+      render json: {error: "Character not Updated"}
     end
   end
 

@@ -99,7 +99,7 @@ export default class HomeContainer extends Component {
       formPayLoad.append('uploaded_image', file);
       formPayLoad.append('stats_attributes', JSON.stringify(stats));
       this.sendImageToController(formPayLoad);
-      // resetForm(event);
+      resetForm(event);
     }
   };
 
@@ -121,9 +121,9 @@ export default class HomeContainer extends Component {
     const { snapshots, index1, index2, editSnapshot } = this.state;
     if (snapshots.length) {
       return (
-        <Grid container spacing={8}>
-          <Grid item sm={6} xs={8}>
-            <Paper sm={6} xs={8}>
+        <Grid container spacing={8} justify="center">
+          <Grid item md={5} sm={6} xs={8}>
+            <Paper md={5} sm={6} xs={8}>
               <Carousel
                 id="carousel1"
                 selectedItem={index1}
@@ -133,15 +133,21 @@ export default class HomeContainer extends Component {
               >
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id} id={snap.id}>
-                    <img alt="snapshot" src={snap.picture.url} max-width="10%" height="500px" />
+                    <img
+                      alt="snapshot"
+                      src={snap.picture.url}
+                      style={{ maxWidth: '400px' }}
+                      maxWidth="40px"
+                      height="500px"
+                    />
                   </div>
                 ))}
               </Carousel>
             </Paper>
           </Grid>
 
-          <Grid item sm={6} xs={12}>
-            <Paper sm={6} xs={12}>
+          <Grid item md={5} sm={6} xs={12}>
+            <Paper md={5} sm={6} xs={12}>
               <Carousel
                 id="carousel2"
                 selectedItem={index2}
@@ -151,14 +157,20 @@ export default class HomeContainer extends Component {
               >
                 {this.state.snapshots.map(snap => (
                   <div key={snap.id}>
-                    <img alt="snapshot" src={snap.picture.url} max-width="20%" height="500px" />
+                    <img
+                      alt="snapshot"
+                      src={snap.picture.url}
+                      style={{ maxWidth: '400px' }}
+                      max-width="20%"
+                      height="500px"
+                    />
                   </div>
                 ))}
               </Carousel>
             </Paper>
           </Grid>
 
-          <Grid item sm={6} xs={12}>
+          <Grid item sm={5} xs={12}>
             {editSnapshot ? (
               <EditSnapshotForm
                 snapshots={snapshots}
@@ -177,7 +189,7 @@ export default class HomeContainer extends Component {
             )}
           </Grid>
 
-          <Grid item sm={6} xs={12}>
+          <Grid item sm={5} xs={12}>
             {editSnapshot ? (
               <EditSnapshotForm
                 snapshots={snapshots}
@@ -217,6 +229,9 @@ export default class HomeContainer extends Component {
           slide1={currentSlide1}
           slide2={currentSlide2}
         />
+        <span>
+          nav
+        </span>
       </div>
     );
   }
