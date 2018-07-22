@@ -7,7 +7,7 @@ class UsersController < ApiController
   end
 
   def home
-    user = User.find_by_auth_token!(request.headers[:token])
+    user = User.find_by_auth_token!(request.headers[:Authorization].split(' ')[1])
     user_snapshots = user.snapshots
     render json: { snapshots: user_snapshots }
     # render json: { user: user.username, email: user.email, name: username.name, snapshots: user_snapshots}
