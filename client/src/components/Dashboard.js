@@ -56,6 +56,7 @@ export default class Dashboard extends Component {
   }
 
   renderCharacters() {
+
     return this.state.myCharacters.map(character => (
       <div key={character.id} className="character">
         <h3>{character.name}</h3>

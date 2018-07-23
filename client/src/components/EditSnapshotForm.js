@@ -69,8 +69,8 @@ class EditSnapshotForm extends Component {
                   <Input
                     name="weight"
                     autoComplete="off"
-                    fullWidth
-                    value={this.state.weight || 0}
+                    style={{maxWidth: '40px'}}
+                    value={this.state.weight}
                   />
                 </TableCell>
               </TableRow>

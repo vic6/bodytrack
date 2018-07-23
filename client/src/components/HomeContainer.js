@@ -83,10 +83,8 @@ export default class HomeContainer extends Component {
         if (this.state.index1 === this.state.snapshots.length - 1) {
           let newIndex = this.state.snapshots.length - 2;
           if (newIndex < 0) newIndex = 0;
-          console.log('NEW INDEX', this.state.index2);
           return this.setState({ index1: newIndex, index2: this.state.snapshots.length - 1 });
         }
-        console.log('NEW INDEX', this.state.index2);
         return this.setState({ index2: this.state.snapshots.length - 1 });
       })
       .then(() => this.getUserSnapshots());
@@ -137,7 +135,6 @@ export default class HomeContainer extends Component {
                       alt="snapshot"
                       src={snap.picture.url}
                       style={{ maxWidth: '400px' }}
-                      maxWidth="40px"
                       height="500px"
                     />
                   </div>
@@ -146,8 +143,8 @@ export default class HomeContainer extends Component {
             </Paper>
           </Grid>
 
-          <Grid item md={5} sm={6} xs={12}>
-            <Paper md={5} sm={6} xs={12}>
+          <Grid item md={5} sm={6} xs={8}>
+            <Paper md={5} sm={6} xs={8}>
               <Carousel
                 id="carousel2"
                 selectedItem={index2}
@@ -161,7 +158,6 @@ export default class HomeContainer extends Component {
                       alt="snapshot"
                       src={snap.picture.url}
                       style={{ maxWidth: '400px' }}
-                      max-width="20%"
                       height="500px"
                     />
                   </div>
@@ -170,7 +166,7 @@ export default class HomeContainer extends Component {
             </Paper>
           </Grid>
 
-          <Grid item sm={5} xs={12}>
+          <Grid item md={5} sm={6} xs={8}>
             {editSnapshot ? (
               <EditSnapshotForm
                 snapshots={snapshots}
@@ -189,7 +185,7 @@ export default class HomeContainer extends Component {
             )}
           </Grid>
 
-          <Grid item sm={5} xs={12}>
+          <Grid item md={5} sm={6} xs={8}>
             {editSnapshot ? (
               <EditSnapshotForm
                 snapshots={snapshots}
@@ -215,24 +211,16 @@ export default class HomeContainer extends Component {
 
   render() {
     const { loaded, snapshots, index1, index2 } = this.state;
-    console.log('INDEX1', index1, 'INDEX2', index2);
-    console.log('SNAPSHOTS', snapshots);
     const currentSlide1 = loaded && snapshots.length ? snapshots[index1].picture.url : '';
     const currentSlide2 = loaded && snapshots.length ? snapshots[index2].picture.url : '';
-
     return (
-      <div>
-        <Home
-          loaded={this.state.loaded}
-          renderImages={this.renderImages}
-          readFile={this.readFile}
-          slide1={currentSlide1}
-          slide2={currentSlide2}
-        />
-        <span>
-          nav
-        </span>
-      </div>
+      <Home
+        loaded={this.state.loaded}
+        renderImages={this.renderImages}
+        readFile={this.readFile}
+        slide1={currentSlide1}
+        slide2={currentSlide2}
+      />
     );
   }
 }

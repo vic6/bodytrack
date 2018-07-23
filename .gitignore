@@ -15,3 +15,4 @@
 public/uploads
 
 .byebug_history
+.vscode/launch.json

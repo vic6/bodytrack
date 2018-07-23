@@ -78,7 +78,7 @@ class App extends Component {
               path="/register"
               render={() =>
                 this.state.auth ? (
-                  <Redirect to="/dash" />
+                  <Redirect to="/home" />
                 ) : (
                   <RegisterForm handleRegisterSubmit={this.handleRegisterSubmit} />
                 )
@@ -89,7 +89,7 @@ class App extends Component {
               path="/login"
               render={() =>
                 this.state.auth ? (
-                  <Redirect to="/dash" />
+                  <Redirect to="/home" />
                 ) : (
                   <LoginForm handleLogin={this.handleLogin} errors={this.state.errors} />
                 )
