@@ -2,11 +2,11 @@ RSpec.describe Snapshot, type: :model do
   before do
     @snapshot = create(:snapshot)
   end
-  it 'is not valid without a user id' do
+  it 'it is valid with a user id' do
     expect(@snapshot).to be_valid
   end
 
-  it 'is valid with user id' do
+  it 'is not valid without user id' do
     snapshot2 = build(:snapshot, user_id: nil)
     expect(snapshot2).to_not be_valid
   end
