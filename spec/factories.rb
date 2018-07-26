@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :snapshot do
     user
+    picture { Rack::Test::UploadedFile.new(Rails.root.join('spec/support/blackbears.jpg'), 'image/jpeg') }
     weight '200'
     neck_size '24'
     waist_size '34'

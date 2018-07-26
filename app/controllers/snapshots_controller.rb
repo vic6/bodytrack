@@ -14,16 +14,26 @@ class SnapshotsController < ApiController
   end
 
   def create
-    new_image = Snapshot.new
+    # new_image = Snapshot.create!(snapshot_params)
+
+    image = Snapshot.new
+    # p snapshot_params
+    # binding.pry
+    # image = current_user.snapshots.build(snapshot_params)
+    p image
+    # p snapshot_params
+    # binding.pry
     stats = JSON.parse(params['stats_attributes'])
-    new_image.picture = params['uploaded_image']
-    new_image.weight = stats['weight'].to_i
-    new_image.neck_size = stats["neck_size"].to_i
-    new_image.chest_size = stats["chest_size"].to_i
-    new_image.waist_size = stats["waist_size"].to_i
-    new_image.hip_size = stats["hip_size"].to_i
-    new_image.user = current_user
-    render json: Snapshot.last if new_image.save
+    
+    # stats = params['stats_attributes']
+    image.picture = params['uploaded_image']
+    image.weight = stats['weight'].to_i
+    image.neck_size = stats["neck_size"].to_i
+    image.chest_size = stats["chest_size"].to_i
+    image.waist_size = stats["waist_size"].to_i
+    image.hip_size = stats["hip_size"].to_i
+    image.user = current_user
+    render json: Snapshot.last if image.save
   end
 
   def edit
@@ -32,18 +42,10 @@ class SnapshotsController < ApiController
 
   def update
     snapshot = current_user.snapshots.find(params['id'])
-    updated_snapshot = {}
-    updated_snapshot['weight'] = params['snapshot']['weight'] if params['snapshot']['weight']
-    updated_snapshot['date'] = params['snapshot']['date'] if params['snapshot']['date']
-    updated_snapshot['neck_size'] = params['snapshot']['neck_size'] if params['snapshot']['neck_size']
-    updated_snapshot['chest_size'] = params['snapshot']['chest_size'] if params['snapshot']['chest_size']
-    updated_snapshot['waist_size'] = params['snapshot']['waist_size'] if params['snapshot']['waist_size']
-    updated_snapshot['hip_size'] = params['snapshot']['hip_size'] if params['snapshot']['hip_size']
-
-    if snapshot.update(updated_snapshot)
+    if snapshot.update_attributes(snapshot_params)
       render json: { message: 'Image Updated' }
     else
-      render json: { error: 'Image update unsuccessful' }
+      render json: { error: 'Unable to update image' }
     end
   end
 
@@ -55,6 +57,6 @@ class SnapshotsController < ApiController
   private
 
   def snapshot_params
-    params.require(['uploaded_image']).permit(stats_attributes: %i[weight waist_size hip_size chest_size neck_size])
+    params.require(:snapshot).permit(%i[stats_attributes chest_size waist_size hip_size neck_size weight])
   end
 end

@@ -132,7 +132,7 @@ export default class AddPictureForm extends Component {
                 <Button xs={6} bsStyle="primary" type="submit">
                   Upload
                 </Button>
-                <input label="submit" type="submit" />
+                {/* <input label="submit" type="submit" /> */}
               </form>
             </Col>
           </div>

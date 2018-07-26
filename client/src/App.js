@@ -14,12 +14,14 @@ class App extends Component {
   state = { auth: Auth.isUserAuthenticated(), errors: null };
 
   handleRegisterSubmit = (event, data) => {
+    console.log('USER DATA', data)
     event.preventDefault();
     fetch('/users', {
       method: 'POST',
       body: JSON.stringify({
         user: data
       }),
+      // body:{ "usered": JSON.stringify(data)},
       headers: {
         'Content-Type': 'application/json'
       }

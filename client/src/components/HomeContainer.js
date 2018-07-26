@@ -38,7 +38,12 @@ export default class HomeContainer extends Component {
     fetch('/snapshots', {
       method: 'POST',
       body: formPayLoad,
+      // body: {"snapshot" :formPayLoad},
+      // body: JSON.stringify({
+      //   snapshot: formPayLoad
+      // }),
       headers: {
+        // 'Content-Type': 'application/json',
         token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       }
@@ -97,7 +102,7 @@ export default class HomeContainer extends Component {
       formPayLoad.append('uploaded_image', file);
       formPayLoad.append('stats_attributes', JSON.stringify(stats));
       this.sendImageToController(formPayLoad);
-      resetForm(event);
+      // resetForm(event);
     }
   };
 
