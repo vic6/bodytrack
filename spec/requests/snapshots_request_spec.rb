@@ -12,10 +12,15 @@ RSpec.describe 'SnapshotsRequest', type: :request do
 
   it 'creates a snapshot' do
     snapshot_attr = FactoryBot.attributes_for(:snapshot).to_json
+    picture = Rack::Test::UploadedFile.new(
+      Rails.root.join('spec/support/blackbears.jpg'), 'image/jpeg'
+    )
     post '/snapshots',
-         params: { "snapshot": snapshot_attr },
+         params: { "snapshot": snapshot_attr, "picture": picture },
          headers: @headers
-    expect(JSON.parse(response.body)['chest_size']).to eq(49)
+    parsed_response = JSON.parse(response.body)
+    expect(parsed_response['chest_size']).to eq(49)
+    expect(parsed_response['picture']['url']).to_not eq nil
   end
 
   it 'returns all current users snapshots' do

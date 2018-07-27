@@ -17,9 +17,9 @@ class SnapshotsController < ApiController
     render json: Snapshot.last if image.save
   end
 
-  def edit
-    snapshot = current_user.snapshots.find(params['id'])
-  end
+  # def edit
+  #   snapshot = current_user.snapshots.find(params['id'])
+  # end
 
   def update
     snapshot = current_user.snapshots.find(params['id'])
