@@ -21,7 +21,6 @@ class App extends Component {
       body: JSON.stringify({
         user: data
       }),
-      // body:{ "usered": JSON.stringify(data)},
       headers: {
         'Content-Type': 'application/json'
       }

@@ -33,17 +33,11 @@ export default class HomeContainer extends Component {
       .then(() => this.setState({ index2: this.state.snapshots.length - 1 || 0 }))
       .catch(errors => console.log(errors));
   };
-
   sendImageToController = formPayLoad => {
     fetch('/snapshots', {
       method: 'POST',
       body: formPayLoad,
-      // body: {"snapshot" :formPayLoad},
-      // body: JSON.stringify({
-      //   snapshot: formPayLoad
-      // }),
       headers: {
-        // 'Content-Type': 'application/json',
         token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       }
@@ -99,8 +93,8 @@ export default class HomeContainer extends Component {
     event.preventDefault();
     if (file) {
       const formPayLoad = new FormData();
-      formPayLoad.append('uploaded_image', file);
-      formPayLoad.append('stats_attributes', JSON.stringify(stats));
+      formPayLoad.append("snapshot", JSON.stringify(stats));
+      formPayLoad.append('picture', file);
       this.sendImageToController(formPayLoad);
       // resetForm(event);
     }

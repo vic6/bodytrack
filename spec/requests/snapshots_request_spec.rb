@@ -10,20 +10,12 @@ RSpec.describe 'SnapshotsRequest', type: :request do
     }
   end
 
-  # {"stats_attributes"=>"{\"chest_size\":\"10\", \"weight\": \"10\", \"hip_size\": \"10\", \"neck_size\": \"10\", \"waist_size\": \"10\"}", "controller"=>"snapshots", "action"=>"create"}
-
-  # { "user": { "name": "vicrules", "username": "vicrules",
-  #   "password": "password", "email": "vicrulez@icecream.com" } }
   it 'creates a snapshot' do
-    snapshot_attr = FactoryBot.attributes_for(:snapshot)
-    p snapshot_attr
+    snapshot_attr = FactoryBot.attributes_for(:snapshot).to_json
     post '/snapshots',
-    params: { "snapshot": snapshot_attr },
-        #  params: { "snapshot": {"stats_attributes": {"chest_size":"10", "weight": "10",
-        #             "hip_size": "10", "neck_size": "10", "waist_size": "10"} } },
+         params: { "snapshot": snapshot_attr },
          headers: @headers
-
-    expect(JSON.parse(response.body)['chest_size']).to eq(10)
+    expect(JSON.parse(response.body)['chest_size']).to eq(49)
   end
 
   it 'returns all current users snapshots' do
@@ -33,9 +25,10 @@ RSpec.describe 'SnapshotsRequest', type: :request do
 
   it 'allows a snapshot to be updated' do
     snapshot_id = @user.snapshots.first.id
+    update = { "weight": "500" }.to_json
     expect(@user.snapshots.find_by(id: snapshot_id).weight).to eq 200
     put "/snapshots/#{snapshot_id}",
-        params: { snapshot: { "weight": "500" } }, headers: @headers
+        params: { snapshot: update }, headers: @headers
     expect(response.body).to eq('{"message":"Image Updated"}')
     expect(@user.snapshots.find_by(id: snapshot_id).weight).to eq 500
   end

@@ -1,7 +1,5 @@
 class SnapshotsController < ApiController
   before_action :require_login
-  # wrap_parameters include: :stats_attributes
-  # respond_to? :json
 
   def index
     snapshots = Snapshot.all
@@ -14,25 +12,8 @@ class SnapshotsController < ApiController
   end
 
   def create
-    # new_image = Snapshot.create!(snapshot_params)
-
-    image = Snapshot.new
-    # p snapshot_params
-    # binding.pry
-    # image = current_user.snapshots.build(snapshot_params)
-    p image
-    # p snapshot_params
-    # binding.pry
-    stats = JSON.parse(params['stats_attributes'])
-    
-    # stats = params['stats_attributes']
-    image.picture = params['uploaded_image']
-    image.weight = stats['weight'].to_i
-    image.neck_size = stats["neck_size"].to_i
-    image.chest_size = stats["chest_size"].to_i
-    image.waist_size = stats["waist_size"].to_i
-    image.hip_size = stats["hip_size"].to_i
-    image.user = current_user
+    image = current_user.snapshots.build(snapshot_params)
+    image.picture = params['picture']
     render json: Snapshot.last if image.save
   end
 
@@ -57,6 +38,7 @@ class SnapshotsController < ApiController
   private
 
   def snapshot_params
-    params.require(:snapshot).permit(%i[stats_attributes chest_size waist_size hip_size neck_size weight])
+    params['snapshot'] = JSON.parse(params['snapshot'])
+    params.require(:snapshot).permit(:picture, :chest_size, :waist_size, :hip_size, :neck_size, :weight)
   end
 end
