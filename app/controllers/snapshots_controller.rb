@@ -17,10 +17,6 @@ class SnapshotsController < ApiController
     render json: Snapshot.last if image.save
   end
 
-  # def edit
-  #   snapshot = current_user.snapshots.find(params['id'])
-  # end
-
   def update
     snapshot = current_user.snapshots.find(params['id'])
     if snapshot.update_attributes(snapshot_params)
@@ -38,7 +34,7 @@ class SnapshotsController < ApiController
   private
 
   def snapshot_params
-    params['snapshot'] = JSON.parse(params['snapshot'])
+    params['snapshot'] = JSON.parse(params['snapshot']) if params['snapshot'].is_a? String
     params.require(:snapshot).permit(:picture, :chest_size, :waist_size, :hip_size, :neck_size, :weight)
   end
 end

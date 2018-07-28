@@ -6,7 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 // import InputLabel from '@material-ui/core/InputLabel';
 // import FormControl from '@material-ui/core/FormControl';
 
@@ -23,11 +23,11 @@ const styles = theme => ({
 
 class EditSnapshotForm extends Component {
   state = {
-    chest_size: this.props.snapshots[this.props.index].chest_size,
-    waist_size: this.props.snapshots[this.props.index].waist_size,
-    neck_size: this.props.snapshots[this.props.index].neck_size,
-    hip_size: this.props.snapshots[this.props.index].hip_size,
-    weight: this.props.snapshots[this.props.index].weight
+    chest_size: this.props.snapshots[this.props.index].chest_size || 0,
+    waist_size: this.props.snapshots[this.props.index].waist_size || 0,
+    neck_size: this.props.snapshots[this.props.index].neck_size || 0,
+    hip_size: this.props.snapshots[this.props.index].hip_size || 0,
+    weight: this.props.snapshots[this.props.index].weight || 0
   };
 
   handleChange = event => {
@@ -69,7 +69,7 @@ class EditSnapshotForm extends Component {
                   <Input
                     name="weight"
                     autoComplete="off"
-                    style={{maxWidth: '40px'}}
+                    style={{ maxWidth: '50px' }}
                     value={this.state.weight}
                   />
                 </TableCell>
@@ -80,7 +80,6 @@ class EditSnapshotForm extends Component {
                   <Input
                     name="neck_size"
                     autoComplete="off"
-                    fullWidth
                     value={this.state.neck_size}
                   />
                 </TableCell>
