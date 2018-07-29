@@ -93,7 +93,7 @@ export default class HomeContainer extends Component {
     event.preventDefault();
     if (file) {
       const formPayLoad = new FormData();
-      formPayLoad.append("snapshot", JSON.stringify(stats));
+      formPayLoad.append('snapshot', JSON.stringify(stats));
       formPayLoad.append('picture', file);
       this.sendImageToController(formPayLoad);
       // resetForm(event);
@@ -116,56 +116,37 @@ export default class HomeContainer extends Component {
 
   renderImages = () => {
     const { snapshots, index1, index2, editSnapshot } = this.state;
+    const style = {
+      // flex: '1 0 50%',
+      // textAlign: 'center',
+      overflow: 'hidden',
+      // flexGrow: 1,
+      flexDirection: 'column'
+      // width: '100%'
+    };
     if (snapshots.length) {
       return (
-        <Grid container spacing={8} justify="center">
-          <Grid item md={5} sm={6} xs={8}>
-            <Paper md={5} sm={6} xs={8}>
-              <Carousel
-                id="carousel1"
-                selectedItem={index1}
-                showThumbs={false}
-                onChange={this.handleCarouselIndex1}
-                infiniteLoop
-              >
-                {this.state.snapshots.map(snap => (
-                  <div key={snap.id} id={snap.id}>
-                    <img
-                      alt="snapshot"
-                      src={snap.picture.url}
-                      style={{ maxWidth: '400px' }}
-                      height="500px"
-                    />
-                  </div>
-                ))}
-              </Carousel>
-            </Paper>
-          </Grid>
+        <Grid container spacing={8} justify='center'>
+          <Grid item lg={4} sm={5} xs={8} style={{minWidth: '400px'}}>
+            <Carousel
+              id="carousel1"
+              selectedItem={index1}
+              showThumbs={false}
+              onChange={this.handleCarouselIndex1}
+              infiniteLoop
+            >
+              {this.state.snapshots.map(snap => (
+                <div key={snap.id} id={snap.id}>
+                  <img
+                    alt="snapshot"
+                    src={snap.picture.url}
+                    // style={{ maxWidth: '400px' }}
+                    height="500px"
+                  />
+                </div>
+              ))}
+            </Carousel>
 
-          <Grid item md={5} sm={6} xs={8}>
-            <Paper md={5} sm={6} xs={8}>
-              <Carousel
-                id="carousel2"
-                selectedItem={index2}
-                showThumbs={false}
-                onChange={this.handleCarouselIndex2}
-                infiniteLoop
-              >
-                {this.state.snapshots.map(snap => (
-                  <div key={snap.id}>
-                    <img
-                      alt="snapshot"
-                      src={snap.picture.url}
-                      style={{ maxWidth: '400px' }}
-                      height="500px"
-                    />
-                  </div>
-                ))}
-              </Carousel>
-            </Paper>
-          </Grid>
-
-          <Grid item md={5} sm={6} xs={8}>
             {editSnapshot ? (
               <EditSnapshotForm
                 snapshots={snapshots}
@@ -184,7 +165,28 @@ export default class HomeContainer extends Component {
             )}
           </Grid>
 
-          <Grid item md={5} sm={6} xs={8}>
+          <Grid item lg={4} sm={5} xs={8} style={{minWidth: '400px'}}>
+            <Paper>
+              <Carousel
+                id="carousel2"
+                selectedItem={index2}
+                showThumbs={false}
+                onChange={this.handleCarouselIndex2}
+                infiniteLoop
+              >
+                {this.state.snapshots.map(snap => (
+                  <div key={snap.id}>
+                    <img
+                      alt="snapshot"
+                      src={snap.picture.url}
+                      // style={{ maxWidth: '400px' }}
+                      height="500px"
+                    />
+                  </div>
+                ))}
+              </Carousel>
+            </Paper>
+
             {editSnapshot ? (
               <EditSnapshotForm
                 snapshots={snapshots}
