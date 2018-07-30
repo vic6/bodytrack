@@ -116,18 +116,10 @@ export default class HomeContainer extends Component {
 
   renderImages = () => {
     const { snapshots, index1, index2, editSnapshot } = this.state;
-    const style = {
-      // flex: '1 0 50%',
-      // textAlign: 'center',
-      overflow: 'hidden',
-      // flexGrow: 1,
-      flexDirection: 'column'
-      // width: '100%'
-    };
     if (snapshots.length) {
       return (
-        <Grid container spacing={8} justify='center'>
-          <Grid item lg={4} sm={5} xs={8} style={{minWidth: '400px'}}>
+        <Grid container spacing={8} justify="center">
+          <Grid item lg={4} sm={5} xs={8} style={{ minWidth: '400px' }}>
             <Carousel
               id="carousel1"
               selectedItem={index1}
@@ -165,7 +157,7 @@ export default class HomeContainer extends Component {
             )}
           </Grid>
 
-          <Grid item lg={4} sm={5} xs={8} style={{minWidth: '400px'}}>
+          <Grid item lg={4} sm={5} xs={8} style={{ minWidth: '400px' }}>
             <Paper>
               <Carousel
                 id="carousel2"

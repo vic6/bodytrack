@@ -7,13 +7,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import SnapshotOptions from './SnapshotOptions';
 // import InputLabel from '@material-ui/core/InputLabel';
 // import FormControl from '@material-ui/core/FormControl';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit,
     overflowX: 'hidden'
   },
   table: {
@@ -53,7 +54,17 @@ class EditSnapshotForm extends Component {
             <TableHead>
               <TableRow>
                 <TableCell>Measurement{snapshots[index].id}</TableCell>
-                <TableCell>Result(inches)</TableCell>
+                <TableCell>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    Result(inches)
+                    <div>
+                      <SnapshotOptions
+                        handleEdit={() => this.props.toggleEditSnapshot(snapshots[index].id)}
+                        handleDelete={() => this.props.deleteImage(snapshots[index].id)}
+                      />
+                    </div>
+                  </div>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -81,6 +92,7 @@ class EditSnapshotForm extends Component {
                     name="neck_size"
                     autoComplete="off"
                     value={this.state.neck_size}
+                    style={{ maxWidth: '50px' }}
                   />
                 </TableCell>
               </TableRow>
@@ -90,7 +102,7 @@ class EditSnapshotForm extends Component {
                   <Input
                     name="chest_size"
                     autoComplete="off"
-                    fullWidth
+                    style={{ maxWidth: '50px' }}
                     value={this.state.chest_size}
                   />
                 </TableCell>
@@ -101,7 +113,7 @@ class EditSnapshotForm extends Component {
                   <Input
                     name="waist_size"
                     autoComplete="off"
-                    fullWidth
+                    style={{ maxWidth: '50px' }}
                     value={this.state.waist_size}
                   />
                 </TableCell>
@@ -109,18 +121,17 @@ class EditSnapshotForm extends Component {
               <TableRow>
                 <TableCell>Hip</TableCell>
                 <TableCell>
-                  <Input name="hip_size" autoComplete="off" fullWidth value={this.state.hip_size} />
+                  <Input
+                    name="hip_size"
+                    autoComplete="off"
+                    style={{ maxWidth: '50px' }}
+                    value={this.state.hip_size}
+                  />
                 </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell onClick={() => this.props.deleteImage(snapshots[index].id)}>
-                  Delete snapshot
-                </TableCell>
-                <TableCell />
               </TableRow>
               <TableRow>
                 <TableCell onClick={() => this.props.toggleEditSnapshot(snapshots[index].id)}>
-                  Edit snapshot
+                  Cancel
                 </TableCell>
                 <TableCell />
               </TableRow>

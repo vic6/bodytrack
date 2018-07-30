@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import SnapshotOptions from './SnapshotOptions';
 
 const styles = theme => ({
   root: {
@@ -20,7 +19,7 @@ const styles = theme => ({
   }
 });
 
-class SnapshotData extends Component {
+class SnapshotTable extends Component {
   render() {
     const { snapshots, index, classes } = this.props;
     return (
@@ -33,9 +32,10 @@ class SnapshotData extends Component {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   Result(inches)
                   <div>
-                    <IconButton aria-label="More">
-                      <MoreVertIcon style={{ display: 'flex', justifyContent: 'flex-end' }} />
-                    </IconButton>
+                    <SnapshotOptions
+                      handleEdit={() => this.props.toggleEditSnapshot(snapshots[index].id)}
+                      handleDelete={() => this.props.deleteImage(snapshots[index].id)}
+                    />
                   </div>
                 </div>
               </TableCell>
@@ -68,18 +68,6 @@ class SnapshotData extends Component {
               <TableCell>Hip</TableCell>
               <TableCell>{snapshots[index].hip_size || 0}</TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell onClick={() => this.props.deleteImage(snapshots[index].id)}>
-                Delete snapshot
-              </TableCell>
-              <TableCell />
-            </TableRow>
-            <TableRow>
-              <TableCell onClick={() => this.props.toggleEditSnapshot(snapshots[index].id)}>
-                Edit snapshot
-              </TableCell>
-              <TableCell />
-            </TableRow>
           </TableBody>
         </Table>
       </Paper>
@@ -87,4 +75,4 @@ class SnapshotData extends Component {
   }
 }
 
-export default withStyles(styles)(SnapshotData);
+export default withStyles(styles)(SnapshotTable);
