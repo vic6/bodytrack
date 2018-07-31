@@ -35,10 +35,6 @@ class SnapshotOptions extends React.Component {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
           transformOrigin={{
             vertical: 'top',
             horizontal: 'right'

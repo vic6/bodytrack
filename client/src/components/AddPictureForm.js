@@ -26,7 +26,6 @@ export default class AddPictureForm extends Component {
     this.setState({
       stats: { ...this.state.stats, [name]: value }
     });
-    console.log(this.state.stats);
   };
 
   resetForm = event => {

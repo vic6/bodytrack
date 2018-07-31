@@ -13,7 +13,6 @@ export default class RegisterForm extends Component {
 
   render() {
     const { name, username, email, password } = this.state;
-
     return (
       <form onSubmit={(event)=>this.props.handleRegisterSubmit(event, this.state)}>
         <FormGroup>

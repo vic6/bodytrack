@@ -17,7 +17,6 @@ RSpec.describe Snapshot, type: :model do
 
   it 'image should be present' do
     @snapshot.picture = @picture
-    p @snapshot.picture.class
     expect(@snapshot.picture.class).to eq PictureUploader
   end
 

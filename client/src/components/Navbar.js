@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
-import './NavBar.css'
+import './NavBar.css';
 
 const NavBar = props => {
-  console.log(props.isLoggedIn);
   return (
     <Navbar collapseOnSelect>
       <Navbar.Header>

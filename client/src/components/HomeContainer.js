@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Carousel } from 'react-responsive-carousel';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Home from './Home';
 import Auth from '../modules/Auth';
-import EditSnapshotForm from './EditSnapshotForm';
-import SnapshotTable from './SnapshotTable';
+import CarouselTable from './CarouselTable';
 
 export default class HomeContainer extends Component {
   state = { snapshots: [], loaded: false, index1: 0, index2: 0, editSnapshot: false };
@@ -33,6 +30,7 @@ export default class HomeContainer extends Component {
       .then(() => this.setState({ index2: this.state.snapshots.length - 1 || 0 }))
       .catch(errors => console.log(errors));
   };
+
   sendImageToController = formPayLoad => {
     fetch('/snapshots', {
       method: 'POST',
@@ -68,7 +66,6 @@ export default class HomeContainer extends Component {
   };
 
   deleteImage = snapshotId => {
-    console.log('ID', snapshotId);
     fetch(`/snapshots/${snapshotId}`, {
       method: 'DELETE',
       body: snapshotId,
@@ -77,7 +74,6 @@ export default class HomeContainer extends Component {
         Authorization: `Token ${Auth.getToken()}`
       }
     })
-      .then(res => console.log('RESPONSE', res))
       .then(() => {
         if (this.state.index1 === this.state.snapshots.length - 1) {
           let newIndex = this.state.snapshots.length - 2;
@@ -96,106 +92,44 @@ export default class HomeContainer extends Component {
       formPayLoad.append('snapshot', JSON.stringify(stats));
       formPayLoad.append('picture', file);
       this.sendImageToController(formPayLoad);
-      // resetForm(event);
+      resetForm(event);
     }
   };
 
-  handleCarouselIndex1 = index => {
+  handleCarousel = (index, carousel) => {
     const currentIndex = index;
     if (this.state.loaded) {
-      this.setState({ index1: currentIndex, editSnapshot: false });
-    }
-  };
-
-  handleCarouselIndex2 = index => {
-    const currentIndex = index;
-    if (this.state.loaded) {
-      this.setState({ index2: currentIndex, editSnapshot: false });
+      this.setState({ [carousel]: currentIndex, editSnapshot: false });
     }
   };
 
   renderImages = () => {
-    const { snapshots, index1, index2, editSnapshot } = this.state;
+    const { snapshots, index1, index2, editSnapshot, loaded } = this.state;
     if (snapshots.length) {
       return (
         <Grid container spacing={8} justify="center">
-          <Grid item lg={4} sm={5} xs={8} style={{ minWidth: '400px' }}>
-            <Carousel
-              id="carousel1"
-              selectedItem={index1}
-              showThumbs={false}
-              onChange={this.handleCarouselIndex1}
-              infiniteLoop
-            >
-              {this.state.snapshots.map(snap => (
-                <div key={snap.id} id={snap.id}>
-                  <img
-                    alt="snapshot"
-                    src={snap.picture.url}
-                    // style={{ maxWidth: '400px' }}
-                    height="500px"
-                  />
-                </div>
-              ))}
-            </Carousel>
-
-            {editSnapshot ? (
-              <EditSnapshotForm
-                snapshots={snapshots}
-                index={index1}
-                toggleEditSnapshot={this.toggleEditSnapshot}
-                sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
-                deleteImage={this.deleteImage}
-              />
-            ) : (
-              <SnapshotTable
-                snapshots={snapshots}
-                index={index1}
-                toggleEditSnapshot={this.toggleEditSnapshot}
-                deleteImage={this.deleteImage}
-              />
-            )}
-          </Grid>
-
-          <Grid item lg={4} sm={5} xs={8} style={{ minWidth: '400px' }}>
-            <Paper>
-              <Carousel
-                id="carousel2"
-                selectedItem={index2}
-                showThumbs={false}
-                onChange={this.handleCarouselIndex2}
-                infiniteLoop
-              >
-                {this.state.snapshots.map(snap => (
-                  <div key={snap.id}>
-                    <img
-                      alt="snapshot"
-                      src={snap.picture.url}
-                      // style={{ maxWidth: '400px' }}
-                      height="500px"
-                    />
-                  </div>
-                ))}
-              </Carousel>
-            </Paper>
-
-            {editSnapshot ? (
-              <EditSnapshotForm
-                snapshots={snapshots}
-                index={index2}
-                toggleEditSnapshot={this.toggleEditSnapshot}
-                sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
-                deleteImage={this.deleteImage}
-              />
-            ) : (
-              <SnapshotTable
-                snapshots={snapshots}
-                index={index2}
-                toggleEditSnapshot={this.toggleEditSnapshot}
-                deleteImage={this.deleteImage}
-              />
-            )}
-          </Grid>
+          <CarouselTable
+            id={'index1'}
+            editSnapshot={editSnapshot}
+            toggleEditSnapshot={this.toggleEditSnapshot}
+            sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
+            deleteImage={this.deleteImage}
+            snapshots={snapshots}
+            index={index1}
+            loaded={loaded}
+            handleCarousel={this.handleCarousel}
+          />
+          <CarouselTable
+            id={'index2'}
+            editSnapshot={editSnapshot}
+            sendUpdatedSnapshotData={this.sendUpdatedSnapshotData}
+            toggleEditSnapshot={this.toggleEditSnapshot}
+            deleteImage={this.deleteImage}
+            snapshots={snapshots}
+            index={index2}
+            loaded={loaded}
+            handleCarousel={this.handleCarousel}
+          />
         </Grid>
       );
     }

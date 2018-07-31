@@ -6,7 +6,6 @@ import AddPictureForm from './AddPictureForm';
 export default class Home extends Component {
   render() {
     const { loaded, renderImages, readFile } = this.props;
-
     return (
       <div className="container">
         <PageHeader>Snapshots</PageHeader>
