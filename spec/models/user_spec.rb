@@ -33,4 +33,12 @@ RSpec.describe User, type: :model do
     user2 = build(:user, email: 'user2@ice.cream@blah.com')
     expect(user2).to_not be_valid
   end
+
+  it 'has the users height' do
+    expect(@user.height).to eq 150
+  end
+
+  it 'has a unit of measurement' do
+    expect(@user.units_of_measurement).to eq 'metric'
+  end
 end

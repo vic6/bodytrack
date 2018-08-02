@@ -13,6 +13,8 @@ end
 FactoryBot.define do
   factory :user do
     username 'vic'
+    height '150'
+    units_of_measurement 'metric'
     email 'vicrulez@vic.com'
     password 'password'
 
