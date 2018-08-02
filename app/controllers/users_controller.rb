@@ -19,9 +19,18 @@ class UsersController < ApiController
                    characters: user_characters }
   end
 
+  def update
+    user = User.find_by_auth_token!(request.headers[:token])
+    if user.update_attributes(user_params)
+      render json: { message: 'User updated' }
+    else
+      render json: { message: 'Unable to update user' }
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :name)
+    params.require(:user).permit(:username, :email, :units_of_measurement, :height, :password, :name)
   end
 end

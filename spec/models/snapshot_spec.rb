@@ -1,7 +1,7 @@
 RSpec.describe Snapshot, type: :model do
   before do
     @snapshot = create(:snapshot)
-    @picture = picture = Rack::Test::UploadedFile.new(
+    @picture = Rack::Test::UploadedFile.new(
       Rails.root.join('spec/support/blackbears.jpg'), 'image/jpeg'
     )
   end
