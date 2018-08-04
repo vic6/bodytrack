@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 
 export default class RegisterForm extends Component {
-  state = { name: '', username: '', unitsOfMeasurement: '', height: '', email: '', password: '' };
+  state = {
+    name: '',
+    username: '',
+    units_of_measurement: 'imperial',
+    height: '',
+    email: '',
+    password: ''
+  };
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -12,7 +19,15 @@ export default class RegisterForm extends Component {
   };
 
   render() {
-    const { name, username, unitsOfMeasurement, height, email, password } = this.state;
+    const {
+      name,
+      username,
+      units_of_measurement: unitsOfMeasurement,
+      height,
+      email,
+      password
+    } = this.state;
+    console.log(this.state);
     return (
       <form onSubmit={event => this.props.handleRegisterSubmit(event, this.state)}>
         <FormGroup>
@@ -42,11 +57,13 @@ export default class RegisterForm extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup controlId="formControlsSelect">
           <FormControl
+            name="units"
             componentClass="select"
             placeholder="Units of Measurement"
             onChange={this.handleChange}
+            value={unitsOfMeasurement}
           >
             <option value="imperial">Imperial(inches)</option>
             <option value="metric">Metric(cm)</option>

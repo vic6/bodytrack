@@ -6,6 +6,7 @@ import Auth from './modules/Auth';
 import Dashboard from './components/Dashboard';
 import HomeContainer from './components/HomeContainer';
 import LoginForm from './components/LoginForm';
+import Profile from './components/Profile'
 import RegisterForm from './components/RegisterForm';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
@@ -14,7 +15,7 @@ class App extends Component {
   state = { auth: Auth.isUserAuthenticated(), errors: null };
 
   handleRegisterSubmit = (event, data) => {
-    console.log('USER DATA', data)
+    console.log('USER DATA', data);
     event.preventDefault();
     fetch('/users', {
       method: 'POST',
@@ -29,7 +30,7 @@ class App extends Component {
       .then(res => {
         Auth.authenticateToken(res.token);
         this.setState({ auth: Auth.isUserAuthenticated() });
-      })
+      });
   };
 
   handleLogin = (event, data) => {
@@ -47,10 +48,9 @@ class App extends Component {
         //   this.setState({errors: res.errors})
         // }
         Auth.authenticateToken(res.token);
-        console.log('RES err', res.errors)
+        console.log('RES err', res.errors);
         this.setState({ auth: Auth.isUserAuthenticated(), errors: res.errors });
-        console.log(this.state);
-      })
+      });
   };
 
   handleLogout = () => {
@@ -60,11 +60,10 @@ class App extends Component {
         token: Auth.getToken(),
         Authorization: `Token ${Auth.getToken()}`
       }
-    })
-      .then(() => {
-        Auth.deauthenticateToken();
-        this.setState({ auth: Auth.isUserAuthenticated() });
-      })
+    }).then(() => {
+      Auth.deauthenticateToken();
+      this.setState({ auth: Auth.isUserAuthenticated() });
+    });
   };
 
   render() {
@@ -72,7 +71,10 @@ class App extends Component {
       <div>
         <Router>
           <div className="App">
-            <NavBar handleLogout={this.handleLogout} isLoggedIn={this.state.auth} />
+            <NavBar
+              handleLogout={this.handleLogout}
+              isLoggedIn={this.state.auth}
+            />
             <Route exact path="/characters" render={() => <HomeContainer />} />
             <Route
               exact
@@ -116,8 +118,11 @@ class App extends Component {
               path="/home"
               render={() => (this.state.auth ? <HomeContainer /> : <Redirect to="/login" />)}
             />
-            <Route exact path="/" render={()=> <Landing />}
+            <Route
+              path="/profile"
+              render={() => (this.state.auth ? <Profile /> : <Redirect to="/login" />)}
             />
+            <Route exact path="/" render={() => <Landing />} />
           </div>
         </Router>
       </div>

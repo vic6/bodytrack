@@ -29,9 +29,14 @@ const NavBar = props => {
             </NavItem>
           )}
           {props.isLoggedIn ? (
-            <NavItem onClick={props.handleLogout} componentClass={Link} href="#" to="#">
-              Logout
-            </NavItem>
+            <Nav>
+              <NavItem onClick={props.goToProfile} componentClass={Link} href="/profile" to="/profile">
+                Profile
+              </NavItem>
+              <NavItem onClick={props.handleLogout} componentClass={Link} href="#" to="#">
+                Logout
+              </NavItem>
+            </Nav>
           ) : (
             <NavItem componentClass={Link} href="/login" to="/login">
               Login
