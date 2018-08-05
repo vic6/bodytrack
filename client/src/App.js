@@ -8,7 +8,7 @@ import HomeContainer from './components/HomeContainer';
 import LoginForm from './components/LoginForm';
 import Profile from './components/Profile'
 import RegisterForm from './components/RegisterForm';
-import NavBar from './components/NavBar';
+import NavBar from './components/Navbar';
 import Landing from './components/Landing';
 
 class App extends Component {
