@@ -120,7 +120,8 @@ class App extends Component {
             />
             <Route
               path="/profile"
-              render={() => (this.state.auth ? <Profile /> : <Redirect to="/login" />)}
+              render={(props) => (this.state.auth ? <Profile {...props} /> : <Redirect to="/login" />)}
+              
             />
             <Route exact path="/" render={() => <Landing />} />
           </div>
