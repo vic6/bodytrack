@@ -27,4 +27,8 @@ RSpec.describe Snapshot, type: :model do
     end
     expect(user.snapshots.length).to be 5
   end
+
+  it 'calculates bodyfat percentage from snapshot' do
+    expect(@snapshot.body_fat).to be 13.4
+  end
 end

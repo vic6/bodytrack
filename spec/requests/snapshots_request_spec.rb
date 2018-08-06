@@ -31,11 +31,20 @@ RSpec.describe 'SnapshotsRequest', type: :request do
   it 'allows a snapshot to be updated' do
     snapshot_id = @user.snapshots.first.id
     update = { "weight": "500" }.to_json
-    expect(@user.snapshots.find_by(id: snapshot_id).weight).to eq 200
+    expect(@user.snapshots.find_by(id: snapshot_id).weight).to eq 230
     put "/snapshots/#{snapshot_id}",
         params: { snapshot: update }, headers: @headers
     expect(response.body).to eq('{"message":"Image Updated"}')
     expect(@user.snapshots.find_by(id: snapshot_id).weight).to eq 500
+  end
+
+  it 'updates bodyfat when attributes are changed' do
+    snapshot_id = @user.snapshots.first.id
+    update = { "waist_size": "30" }.to_json
+    put "/snapshots/#{snapshot_id}",
+        params: { snapshot: update }, headers: @headers
+    expect(@user.snapshots.find_by(id: snapshot_id).waist_size).to eq 30
+    expect(@user.snapshots.first.body_fat).to eq 3.3
   end
 
   it 'removes a snapshot on deletion' do
