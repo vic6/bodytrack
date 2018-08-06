@@ -35,10 +35,10 @@ RSpec.describe User, type: :model do
   end
 
   it 'has the users height' do
-    expect(@user.height).to eq 150
+    expect(@user.height).to eq 70
   end
 
   it 'has a unit of measurement' do
-    expect(@user.units_of_measurement).to eq 'metric'
+    expect(@user.units_of_measurement).to eq 'imperial'
   end
 end

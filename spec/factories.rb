@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :snapshot do
     user
-    weight '200'
-    neck_size '24'
+    weight '230'
+    neck_size '17'
     waist_size '34'
     chest_size '49'
     hip_size '44'
@@ -13,8 +13,8 @@ end
 FactoryBot.define do
   factory :user do
     username 'vic'
-    height '150'
-    units_of_measurement 'metric'
+    height '70'
+    units_of_measurement 'imperial'
     email 'vicrulez@vic.com'
     password 'password'
 

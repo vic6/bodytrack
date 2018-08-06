@@ -68,6 +68,10 @@ class SnapshotTable extends Component {
               <TableCell>Hip</TableCell>
               <TableCell>{snapshots[index].hip_size || 0}</TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell>Body Fat(%)</TableCell>
+              <TableCell>{snapshots[index].body_fat || 0}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </Paper>
